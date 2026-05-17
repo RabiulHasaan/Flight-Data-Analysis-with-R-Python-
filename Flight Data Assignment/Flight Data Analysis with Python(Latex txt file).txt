@@ -1,0 +1,1883 @@
+\documentclass[12pt,a4paper]{article}
+
+% Page Layout
+\usepackage[a4paper,margin=1in]{geometry}
+
+% Times New Roman Font
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+
+% Line Spacing
+\usepackage{setspace}
+\singlespacing
+
+% Color
+\usepackage{xcolor}
+
+% Image Packages
+\usepackage{graphicx}
+\usepackage{float}
+
+% Code Formatting
+\usepackage{listings}
+
+
+
+
+
+
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{fontspec}
+\usepackage{subcaption}
+
+
+\lstset{
+    language=R,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green},
+    stringstyle=\color{red},
+    breaklines=true,
+    showstringspaces=false,
+    frame=single
+}
+
+
+
+
+\begin{document}
+
+
+
+\begin{titlepage}
+\newgeometry{margin=0in}
+% Background
+\begin{tikzpicture}[remember picture,overlay]
+
+% Full Background Color
+\fill[blue!6] (current page.south west)
+rectangle (current page.north east);
+
+% Top Shape
+\fill[blue!20]
+(current page.north west)
+-- ++(8,-3)
+-- ++(4,5)
+-- ++(-12,-2)
+-- cycle;
+
+% Left Shape
+\fill[purple!15]
+(current page.south west)
+-- ++(5,8)
+-- ++(4,-3)
+-- ++(-2,-8)
+-- cycle;
+
+% Bottom Right Shape
+\fill[cyan!20]
+(current page.south east)
+-- ++(-8,4)
+-- ++(3,6)
+-- ++(8,-2)
+-- cycle;
+
+% Main White Card
+\fill[white!55,rounded corners=25pt]
+(3,4) rectangle (18,24);
+
+\end{tikzpicture}
+
+\vspace*{0.8cm}
+
+% Top Row
+\noindent
+\hspace{1.2cm}
+\begin{minipage}{0.12\textwidth}
+\includegraphics[width=\linewidth]{BRUR_Logo.svg.png}
+\end{minipage}
+\hspace{0.7cm}
+\begin{minipage}{0.7\textwidth}
+\vspace{0.5cm}
+{\Huge \textbf{BEGUM ROKEYA UNIVERSITY, RANGPUR}}
+\end{minipage}
+
+\vspace{4.2cm}
+
+\begin{center}
+
+{\Huge \textbf{ASSIGNMENT ON}}
+
+\vspace{0.8cm}
+
+{\LARGE \textbf{Flight Data Analysis with Python}}
+
+\vspace{1.3cm}
+
+{\Large \textbf{Course Title:}}\\[0.2cm]
+{\Large Programming with R \& Python}
+
+\vspace{0.7cm}
+
+{\Large \textbf{Course Code:}}\\[0.2cm]
+{\Large STAT-2205}
+
+\vspace{0.7cm}
+
+{\Large \textbf{Submission Date:}}\\[0.2cm]
+{\Large 20 MAY 2026}
+
+\end{center}
+
+\vfill
+
+% Bottom Section
+\noindent
+\hspace{1.2cm}
+\begin{minipage}[t]{0.38\textwidth}
+
+\raggedright
+
+{\Large \textbf{Submitted By}}
+
+\vspace{0.6cm}
+
+{\large \textbf{MOHAMMAD RABIUL HASAN}} \\[0.35cm]
+
+{\large \textbf{ID:} 12210048} \\[0.35cm]
+
+{\large \textbf{Reg:} 000017428} \\[0.35cm]
+
+{\large \textbf{Session:} 2023-2024} \\[0.35cm]
+
+{\large Department of Statistics} \\[0.35cm]
+
+{\large Begum Rokeya University, Rangpur}
+
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.38\textwidth}
+
+\raggedright
+
+{\Large \textbf{Submitted To}}
+
+\vspace{0.6cm}
+
+{\large \textbf{DR. MD. SIDDIKUR RAHMAN}} \\[0.35cm]
+
+{\large Associate Professor} \\[0.35cm]
+
+{\large Department of Statistics} \\[0.35cm]
+
+{\large Begum Rokeya University, Rangpur}
+
+\end{minipage}
+
+\vspace{1.5cm}
+
+\end{titlepage}
+
+\restoregeometry
+\newpage
+
+\tableofcontents
+
+\newpage
+
+\begin{center}
+    \Large \textbf{\textcolor{blue}{Flight Data Analysis with Python}}
+\end{center}
+\section*{\textcolor{blue}{Question no 1}}
+
+
+What do coach ticket prices look like? What are the high and low values? What would be considered the average? Does \$500 seem like a good price for a coach ticket?
+
+\addcontentsline{toc}{section}{Question no 1}
+
+% =========================
+% Python Code
+% =========================
+
+\section{\textcolor{blue}{Solution :}}
+\subsection{\textcolor{blue}{Python Code}}
+
+\begin{lstlisting}[language=Python]
+
+# ==============================
+# Question 1
+# Coach Ticket Price Analysis
+# ==============================
+# Import libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Load dataset
+airline = pd.read_csv("flight_data.csv")
+
+# Random sample using ID
+flight = airline.sample(n=200, random_state=12210048)
+
+# Highest coach ticket price
+max_price = flight["coach_price"].max()
+
+# Lowest coach ticket price
+min_price = flight["coach_price"].min()
+
+# Average coach ticket price
+mean_price = flight["coach_price"].mean()
+
+# Median coach ticket price
+median_price = flight["coach_price"].median()
+# Standard deviation
+std_price = flight["coach_price"].std()
+# Display results
+print("Highest Coach Ticket Price =", max_price)
+print("Lowest Coach Ticket Price =", min_price)
+print("Average Coach Ticket Price =", mean_price)
+print("Median Coach Ticket Price =", median_price)
+print("Standard Deviation =", std_price)
+# Summary statistics
+print("\nSummary Statistics:")
+print(flight["coach_price"].describe())
+\end{lstlisting}
+\newpage
+\begin{lstlisting}
+# Histogram
+plt.figure(figsize=(8,5))
+plt.hist(
+    flight["coach_price"],
+    bins=8,
+    color="skyblue",
+    edgecolor="black")
+plt.title("Distribution of Coach Ticket Prices")
+plt.xlabel("Coach Ticket Price")
+plt.ylabel("Frequency")
+plt.show()
+
+# Boxplot
+plt.figure(figsize=(8,5))
+
+plt.boxplot(
+    flight["coach_price"],
+    patch_artist=True,
+    boxprops=dict(facecolor="lightgreen")
+)
+
+plt.title("Boxplot of Coach Ticket Prices")
+plt.ylabel("Coach Ticket Price")
+
+plt.show()
+
+# Is $500 a Good Price?
+if mean_price < 500:
+    print("\n$500 is relatively expensive compared to the average coach ticket price.")
+else:
+    print("\n$500 is a reasonable coach ticket price.")
+
+\end{lstlisting}
+
+% =========================
+% Results
+% =========================
+
+\subsection{\textcolor{purple}{Results}}
+
+\begin{itemize}
+    \item Highest Coach Ticket Price = 507.88
+    \item Lowest Coach Ticket Price = 185.05
+    \item Average Coach Ticket Price = 382.06
+    \item Median Coach Ticket Price = 386.87
+    \item Standard Deviation = 66.32
+    \item \$500 is relatively expensive compared to the average coach ticket price.
+\end{itemize}
+
+\begin{verbatim}
+Summary Statistics
+
+  count    200.000000
+  mean     382.055475
+  std       66.324042
+  min      185.050000
+  25%      341.915000
+  50%      386.872500
+  75%      431.253750
+  max      507.880000
+\end{verbatim}
+
+% =========================
+% Histogram
+% =========================
+
+
+
+
+\subsection{\textcolor{red}{Histogram}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\textwidth]{his_1.png}
+\caption{Distribution of Coach Ticket Prices}
+\end{figure}
+
+\vspace{0.2cm}
+
+\subsection{\textcolor{red}{Boxplot}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\textwidth]{box_1.png}
+\caption{Boxplot of Coach Ticket Prices}
+\end{figure}
+
+% =========================
+% Interpretation
+% =========================
+
+\subsection{\textcolor{teal}{Interpretation}}
+
+The coach ticket prices in the sampled flight dataset range from \$185.05 to \$507.88. The average coach ticket price is approximately \$382.06, while the median price is \$386.87. Since the mean and median values are very close, the distribution of coach ticket prices appears to be fairly symmetric.
+
+The histogram shows that most ticket prices are concentrated between \$300 and \$450, indicating that the majority of flights have moderate ticket prices. Very low and very high prices occur less frequently.
+
+The boxplot also shows a moderate spread in coach ticket prices and identifies a possible low-price outlier near \$185. This suggests that a few flights may have unusually cheap ticket prices compared to the rest of the dataset.
+
+The standard deviation of approximately 66.32 indicates moderate variability in coach ticket prices. Since the average ticket price is considerably lower than \$500, a \$500 coach ticket appears relatively expensive compared to most flights in the sample.
+
+
+
+\section*{\textcolor{blue}{Question no 2}}
+What are the high, low, and average prices for 8-hour-long flights? Does \$500 seem more reasonable than before?
+
+\addcontentsline{toc}{section}{Question no 2}
+\section{Solution:}
+% =========================
+% Python Code
+% =========================
+
+\subsection{\textcolor{blue}{Python Code}}
+
+\begin{lstlisting}[language=Python]
+
+# ==============================
+# Question 2
+# 8-Hour Flight Price Analysis
+# ==============================
+
+# Flights with approximately 8-hour duration
+flight_8hr = flight[flight["hours"] == 8]
+
+# Highest price for 8-hour flights
+max_price = flight_8hr["coach_price"].max()
+
+# Lowest price for 8-hour flights
+min_price = flight_8hr["coach_price"].min()
+
+# Average price for 8-hour flights
+mean_price = flight_8hr["coach_price"].mean()
+
+# Median price
+median_price = flight_8hr["coach_price"].median()
+
+# Standard deviation
+std_price = flight_8hr["coach_price"].std()
+\end{lstlisting}
+\newpage
+\begin{lstlisting}
+# Print results
+print("Highest Price =", max_price)
+print("Lowest Price =", min_price)
+print("Average Price =", mean_price)
+print("Median Price =", median_price)
+print("Standard Deviation =", std_price)
+
+# Summary statistics
+print("\nSummary Statistics:")
+print(flight_8hr["coach_price"].describe())
+
+# Histogram
+plt.figure(figsize=(8,5))
+
+plt.hist(
+    flight_8hr["coach_price"],
+    bins=5,
+    color="skyblue",
+    edgecolor="black"
+)
+
+plt.title("Distribution of 8-Hour Flight Prices")
+plt.xlabel("Coach Ticket Price")
+plt.ylabel("Frequency")
+
+plt.show()
+
+# Boxplot
+plt.figure(figsize=(8,5))
+
+plt.boxplot(
+    flight_8hr["coach_price"],
+    patch_artist=True,
+    boxprops=dict(facecolor="orange")
+)
+
+plt.title("Boxplot of 8-Hour Flight Prices")
+plt.ylabel("Coach Ticket Price")
+
+plt.show()
+
+# Price comparison
+if mean_price < 500:
+    print("\n$500 seems expensive but more reasonable for 8-hour flights.")
+else:
+    print("\n$500 seems reasonable for 8-hour flights.")
+
+\end{lstlisting}
+
+
+
+
+
+
+% =========================
+% Results
+% =========================
+
+\subsection{\textcolor{purple}{Results}}
+
+\begin{itemize}
+    \item Highest Price = 472.35
+    \item Lowest Price = 417.45
+    \item Average Price = 444.90
+    \item Median Price = 444.90
+    \item Standard Deviation = 38.82
+    \item \$500 seems expensive but more reasonable for 8-hour flights.
+\end{itemize}
+
+\begin{verbatim}
+Summary Statistics
+
+count      2.000000
+mean     444.900000
+std       38.820000
+min      417.450000
+25%      431.175000
+50%      444.900000
+75%      458.625000
+max      472.350000
+\end{verbatim}
+
+
+% =========================
+% Histogram
+% =========================
+
+\subsection{\textcolor{red}{Histogram}}
+\vspace{-.5cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{his_2.png}
+\caption{Distribution of 8-Hour Flight Prices}
+\end{figure}
+
+% =========================
+% Boxplot
+% =========================
+
+\subsection{\textcolor{red}{Boxplot}}
+\vspace{-.5cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{box_2.png}
+\caption{Boxplot of 8-Hour Flight Prices}
+\end{figure}
+
+% =========================
+% Interpretation
+% =========================
+
+\subsection{\textcolor{teal}{Interpretation}}
+
+The histogram and boxplot show the distribution of coach ticket prices for 8-hour flights. The ticket prices are concentrated in the higher price range, indicating that long-duration flights are generally more expensive than shorter flights.
+
+The boxplot shows moderate variation in ticket prices and no major outliers are visible in the dataset. The median price is located near the center of the box, suggesting a relatively balanced distribution of prices.
+
+Compared to the overall coach ticket prices from Question 1, 8-hour flights have noticeably higher prices. Therefore, a \$500 coach ticket appears more reasonable for long-duration flights, although it is still relatively expensive compared to most tickets in the sample.
+
+\newpage
+\section*{Question no 3}
+
+How are flight delay times distributed? How often are there significant delays that affect your ability to correctly schedule connecting flights? What kinds of delays are typical?
+
+\addcontentsline{toc}{section}{Question no 3}
+\section{Solution:}
+% =========================
+% Python Code
+% =========================
+
+\subsection{\textcolor{blue}{Python Code}}
+
+\begin{lstlisting}[language=Python]
+
+# ==============================
+# Question 3
+# Flight Delay Analysis
+# ==============================
+# Summary statistics for delays
+print(flight["delay"].describe())
+
+# Mean delay
+mean_delay = flight["delay"].mean()
+# Median delay
+median_delay = flight["delay"].median()
+# Standard deviation
+std_delay = flight["delay"].std()
+
+# Maximum delay
+max_delay = flight["delay"].max()
+
+# Minimum delay
+min_delay = flight["delay"].min()
+
+# Print results
+print("\nMean Delay =", mean_delay)
+print("Median Delay =", median_delay)
+print("Standard Deviation =", std_delay)
+print("Maximum Delay =", max_delay)
+print("Minimum Delay =", min_delay)
+
+# Histogram of delays
+plt.figure(figsize=(8,5))
+
+plt.hist(
+    flight["delay"],
+    bins=10,
+    color="skyblue",
+    edgecolor="black")
+plt.title("Distribution of Flight Delays")
+plt.xlabel("Delay Time (Minutes)")
+plt.ylabel("Frequency")
+
+plt.show()
+\end{lstlisting}
+\begin{lstlisting}
+# Boxplot of delays
+plt.figure(figsize=(8,5))
+
+plt.boxplot(
+    flight["delay"],
+    patch_artist=True,
+    boxprops=dict(facecolor="orange")
+)
+
+plt.title("Boxplot of Flight Delays")
+plt.ylabel("Delay Time (Minutes)")
+
+plt.show()
+
+# Number of significant delays (more than 60 minutes)
+significant_delays = (flight["delay"] > 60).sum()
+
+# Percentage of significant delays
+significant_percentage = ((flight["delay"] > 60).mean()) * 100
+
+print("\nNumber of Significant Delays =", significant_delays)
+print("Percentage of Significant Delays =", significant_percentage)
+
+\end{lstlisting}
+
+% =========================
+% Results
+% =========================
+
+\subsection{\textcolor{purple}{Results}}
+
+\begin{itemize}
+    \item Mean Delay = 12.04 minutes
+    \item Median Delay = 10.00 minutes
+    \item Standard Deviation = 8.10
+    \item Maximum Delay = 51 minutes
+    \item Minimum Delay = 0 minutes
+    \item Number of Significant Delays = 0
+    \item Percentage of Significant Delays = 0\%
+\end{itemize}
+
+\begin{verbatim}
+Summary Statistics
+
+count    200.000000
+mean      12.035000
+std        8.102594
+min        0.000000
+25%        8.750000
+50%       10.000000
+75%       13.000000
+max       51.000000
+\end{verbatim}
+
+% =========================
+% Histogram
+% =========================
+
+\subsection{\textcolor{red}{Histogram}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{his_3.png}
+\caption{Distribution of Flight Delays}
+\end{figure}
+% =========================
+% Boxplot
+% =========================
+
+\subsection{\textcolor{red}{Boxplot}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{box_3.png}
+\caption{Boxplot of Flight Delays}
+\end{figure}
+% =========================
+% Interpretation
+% =========================
+\newpage
+\subsection{\textcolor{teal}{Interpretation}}
+
+The histogram shows that most flight delays are concentrated between 5 and 15 minutes. The distribution is positively skewed because a small number of flights experienced longer delays above 30 minutes.
+
+The average delay time is approximately 12.04 minutes, while the median delay is 10 minutes. Since the mean is slightly higher than the median, this indicates the presence of a few larger delay values in the dataset.
+
+The maximum delay observed was 51 minutes, while some flights experienced no delay at all. The standard deviation of 8.10 suggests moderate variation in delay times among flights.
+
+No flight delays exceeded 60 minutes in the sample dataset. Therefore, there were no significant delays that would seriously affect connecting flights. Most delays in the dataset can be considered short and manageable.
+
+
+
+\section*{Question no 4}
+
+How does the coach price correlate with flight distance, number of passengers, delay, and flight duration?
+
+\addcontentsline{toc}{section}{Question no 4}
+\section{Solution:}
+% =========================
+% Python Code
+% =========================
+
+\subsection{\textcolor{blue}{Python Code}}
+
+\begin{lstlisting}[language=Python]
+
+# ==============================
+# Question 4
+# Correlation Analysis
+# Coach Price vs Other Variables
+# ==============================
+
+# Select numeric variables
+variables = flight[[
+    "coach_price",
+    "miles",
+    "passengers",
+    "delay",
+    "hours"
+]]
+
+# Correlation matrix
+correlation_matrix = variables.corr()
+
+print(correlation_matrix)
+\end{lstlisting}
+\newpage
+\begin{lstlisting}
+# Correlation Heatmap
+
+import seaborn as sns
+
+plt.figure(figsize=(8,6))
+
+sns.heatmap(
+    correlation_matrix,
+    annot=True,
+    cmap="coolwarm",
+    fmt=".2f"
+)
+
+plt.title("Correlation Heatmap")
+
+plt.show()
+
+
+# Coach Price vs Flight Distance
+
+
+plt.figure(figsize=(8,5))
+
+plt.scatter(
+    flight["miles"],
+    flight["coach_price"],
+    color="blue"
+)
+
+plt.title("Coach Price vs Flight Distance")
+plt.xlabel("Miles")
+plt.ylabel("Coach Price")
+
+plt.show()
+
+# Coach Price vs Number of Passengers
+
+plt.figure(figsize=(8,5))
+
+plt.scatter(
+    flight["passengers"],
+    flight["coach_price"],
+    color="green"
+)
+
+plt.title("Coach Price vs Number of Passengers")
+plt.xlabel("Passengers")
+plt.ylabel("Coach Price")
+
+plt.show()
+\end{lstlisting}
+\newpage
+\begin{lstlisting}
+# Coach Price vs Delay
+
+plt.figure(figsize=(8,5))
+
+plt.scatter(
+    flight["delay"],
+    flight["coach_price"],
+    color="red"
+)
+
+plt.title("Coach Price vs Delay")
+plt.xlabel("Delay (Minutes)")
+plt.ylabel("Coach Price")
+
+plt.show()
+
+# Coach Price vs Flight Duration
+
+plt.figure(figsize=(8,5))
+
+plt.scatter(
+    flight["hours"],
+    flight["coach_price"],
+    color="purple"
+)
+
+plt.title("Coach Price vs Flight Duration")
+plt.xlabel("Hours")
+plt.ylabel("Coach Price")
+
+plt.show()
+
+\end{lstlisting}
+
+% =========================
+% Results
+% =========================
+
+\subsection{\textcolor{purple}{Results}}
+
+\begin{verbatim}
+               coach_price   miles   passengers   delay   hours
+
+coach_price      1.000000   0.33      0.30       0.07    0.31
+miles            0.33       1.000000  0.15       0.06    0.98
+passengers       0.30       0.15      1.000000   0.06    0.16
+delay            0.07       0.06      0.06       1.000000 0.05
+hours            0.31       0.98      0.16       0.05    1.000000
+\end{verbatim}
+
+% =========================
+% Heatmap
+% =========================
+
+\subsection{\textcolor{red}{Correlation Heatmap}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{heat_4.png}
+\caption{Correlation Heatmap}
+\end{figure}
+
+% =========================
+% Scatter Plot 1
+% =========================
+
+\subsection{\textcolor{red}{Coach Price vs Flight Distance}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{scat_4.1.png}
+\caption{Coach Price vs Flight Distance}
+\end{figure}
+
+% =========================
+% Scatter Plot 2
+% =========================
+
+\subsection{\textcolor{red}{Coach Price vs Number of Passengers}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{scat_4.2.png}
+\caption{Coach Price vs Number of Passengers}
+\end{figure}
+
+% =========================
+% Scatter Plot 3
+% =========================
+
+\subsection{\textcolor{red}{Coach Price vs Delay}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{scat_4.3.png}
+\caption{Coach Price vs Delay}
+\end{figure}
+
+% =========================
+% Scatter Plot 4
+% =========================
+
+\subsection{\textcolor{red}{Coach Price vs Flight Duration}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{scat_4.4.png}
+\caption{Coach Price vs Flight Duration}
+\end{figure}
+
+% =========================
+% Interpretation
+% =========================
+
+\subsection{\textcolor{teal}{Interpretation}}
+
+The correlation analysis shows that coach ticket price has a moderate positive relationship with both flight distance and flight duration. The correlation between coach price and miles is 0.33, while the correlation between coach price and hours is 0.31. This indicates that longer flights generally have higher coach ticket prices.
+
+The number of passengers has a weak positive correlation with coach price (0.30). This suggests that flights with more passengers may have slightly higher ticket prices, although the relationship is not very strong.
+
+The correlation between coach price and delay is only 0.07, which indicates almost no relationship between delay time and ticket price. Therefore, ticket prices do not appear to depend significantly on flight delays.
+
+The heatmap visually confirms these relationships and highlights that miles and hours have a very strong positive correlation (0.98), meaning longer distances usually require longer flight durations.
+
+The scatter plots also support the correlation analysis. Flights with greater distance and longer duration generally show higher coach ticket prices, while delay and passenger count show weaker relationships with price.
+
+\newpage
+
+\section*{Question no 5}
+
+What is the relationship between coach and first-class prices? Do flights with higher coach prices always have higher first-class prices as well?
+
+\addcontentsline{toc}{section}{Question no 5}
+\section{Solution:}
+% =========================
+% Python Code
+% =========================
+
+\subsection{\textcolor{blue}{Python Code}}
+
+\begin{lstlisting}[language=Python]
+
+# ==============================
+# Question 5
+# Relationship Between Coach and First-Class Prices
+# ==============================
+
+# Correlation between coach and first-class prices
+correlation = flight["coach_price"].corr(
+    flight["firstclass_price"])
+
+print("Correlation =", correlation)
+
+# Scatter Plot
+
+plt.figure(figsize=(8,5))
+
+plt.scatter(
+    flight["coach_price"],
+    flight["firstclass_price"],
+    color="blue")
+
+plt.title("Coach Price vs First-Class Price")
+plt.xlabel("Coach Ticket Price")
+plt.ylabel("First-Class Ticket Price")
+
+plt.show()
+
+# Linear Regression Model
+
+from sklearn.linear_model import LinearRegression
+import numpy as np
+
+# Independent variable
+X = flight[["coach_price"]]
+
+# Dependent variable
+y = flight["firstclass_price"]
+
+# Create model
+model_fc = LinearRegression()
+\end{lstlisting}
+\newpage
+\begin{lstlisting}
+# Fit model
+model_fc.fit(X, y)
+
+# Predicted values
+y_pred = model_fc.predict(X)
+
+# Regression equation
+intercept = model_fc.intercept_
+slope = model_fc.coef_[0]
+
+print("\nRegression Equation:")
+print(f"y = {intercept:.2f} + {slope:.2f}x")
+
+# Scatter Plot with Regression Line
+
+plt.figure(figsize=(8,5))
+
+plt.scatter(
+    flight["coach_price"],
+    flight["firstclass_price"],
+    color="blue"
+)
+
+plt.plot(
+    flight["coach_price"],
+    y_pred,
+    color="red",
+    linewidth=2
+)
+
+plt.title("Coach Price vs First-Class Price")
+plt.xlabel("Coach Ticket Price")
+plt.ylabel("First-Class Ticket Price")
+
+plt.show()
+
+\end{lstlisting}
+
+% =========================
+% Results
+% =========================
+
+\subsection{\textcolor{purple}{Results}}
+
+\begin{verbatim}
+Correlation = 0.6980499060129133
+
+Regression Equation:
+y = 823.53 + 1.67x
+\end{verbatim}
+
+% =========================
+% Scatter Plot
+% =========================
+
+\subsection{\textcolor{red}{Scatter Plot}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{scat_5.1.png}
+\caption{Coach Price vs First-Class Price}
+\end{figure}
+
+% =========================
+% Regression Line Graph
+% =========================
+
+\subsection{\textcolor{red}{Regression Line Graph}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{scat_5.2.png}
+\caption{Coach Price vs First-Class Price with Regression Line}
+\end{figure}
+\newpage
+% =========================
+% Regression Equation
+% =========================
+
+\subsection{\textcolor{purple}{Regression Equation}}
+
+
+
+
+Regression Equation is:
+y = 823.53 + 1.67x
+
+Where,
+
+\begin{itemize}
+    \item $y$ = First-Class Ticket Price
+    \item $x$ = Coach Ticket Price
+\end{itemize}
+
+% =========================
+% Interpretation
+% =========================
+
+\subsection{\textcolor{teal}{Interpretation}}
+
+The correlation coefficient between coach ticket price and first-class ticket price is 0.698, which indicates a strong positive relationship between the two variables.
+
+The scatter plot shows that flights with higher coach ticket prices generally also have higher first-class ticket prices. Most points follow an upward trend, indicating that as coach prices increase, first-class prices also increase.
+
+The regression line graph further confirms this positive linear relationship. According to the regression equation, for every one-dollar increase in coach ticket price, the first-class ticket price increases by approximately 1.67 dollars.
+
+However, the relationship is not perfectly linear because some points are scattered away from the regression line. Therefore, flights with higher coach prices usually have higher first-class prices, but not always exactly at the same rate.
+
+
+\section*{Question no 6}
+
+What is the relationship between coach prices and in-flight features: in-flight meal, in-flight entertainment, and in-flight WiFi? Which features are associated with the highest increase in price?
+
+\addcontentsline{toc}{section}{Question no 6}
+\section{Solution:}
+% =========================
+% Python Code
+% =========================
+
+\subsection{\textcolor{blue}{Python Code}}
+
+\begin{lstlisting}[language=Python]
+
+# ==============================
+# Question 6
+# Relationship Between Coach Prices and In-Flight Features
+# ==============================
+
+# Average Coach Price by Meal Availability
+
+meal_price = flight.groupby(
+    "inflight_meal"
+)["coach_price"].mean()
+
+print("Average Coach Price by Meal Availability:")
+print(meal_price)
+\end{lstlisting}
+\newpage
+\begin{lstlisting}
+# Average Coach Price by Entertainment
+
+ent_price = flight.groupby(
+    "inflight_entertainment"
+)["coach_price"].mean()
+
+print("\nAverage Coach Price by Entertainment:")
+print(ent_price)
+
+# Average Coach Price by WiFi
+
+wifi_price = flight.groupby(
+    "inflight_wifi"
+)["coach_price"].mean()
+
+print("\nAverage Coach Price by WiFi:")
+print(wifi_price)
+
+# Boxplot for Meal
+
+plt.figure(figsize=(8,5))
+
+flight.boxplot(
+    column="coach_price",
+    by="inflight_meal",
+    patch_artist=True,
+    boxprops=dict(facecolor="skyblue")
+)
+
+plt.title("Coach Price by In-Flight Meal")
+plt.suptitle("")
+plt.xlabel("Meal Available")
+plt.ylabel("Coach Price")
+
+plt.show()
+
+# Boxplot for Entertainment
+plt.figure(figsize=(8,5))
+flight.boxplot(
+    column="coach_price",
+    by="inflight_entertainment",
+    patch_artist=True,
+    boxprops=dict(facecolor="lightgreen")
+)
+plt.title("Coach Price by In-Flight Entertainment")
+plt.suptitle("")
+plt.xlabel("Entertainment Available")
+plt.ylabel("Coach Price")
+plt.show()
+\end{lstlisting}
+\newpage
+\begin{lstlisting}
+# Boxplot for WiFi
+
+plt.figure(figsize=(8,5))
+
+flight.boxplot(
+    column="coach_price",
+    by="inflight_wifi",
+    patch_artist=True,
+    boxprops=dict(facecolor="orange")
+)
+
+plt.title("Coach Price by In-Flight WiFi")
+plt.suptitle("")
+plt.xlabel("WiFi Available")
+plt.ylabel("Coach Price")
+
+plt.show()
+
+\end{lstlisting}
+
+% =========================
+% Results
+% =========================
+
+\subsection{\textcolor{purple}{Results}}
+
+\begin{verbatim}
+Average Coach Price by Meal Availability:
+
+No     371.95
+Yes    402.57
+
+
+Average Coach Price by Entertainment:
+
+No     332.33
+Yes    394.10
+
+
+Average Coach Price by WiFi:
+
+No     330.20
+Yes    389.46
+\end{verbatim}
+
+% =========================
+% Boxplot 1
+% =========================
+
+\subsection{\textcolor{red}{Coach Price by In-Flight Meal}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{box_6.1.png}
+\caption{Coach Price by In-Flight Meal}
+\end{figure}
+
+% =========================
+% Boxplot 2
+% =========================
+
+\subsection{\textcolor{red}{Coach Price by In-Flight Entertainment}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{box_6.2.png}
+\caption{Coach Price by In-Flight Entertainment}
+\end{figure}
+
+% =========================
+% Boxplot 3
+% =========================
+
+\subsection{\textcolor{red}{Coach Price by In-Flight WiFi}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{box_6.3.png}
+\caption{Coach Price by In-Flight WiFi}
+\end{figure}
+
+% =========================
+% Interpretation
+% =========================
+
+\subsection{\textcolor{teal}{Interpretation}}
+
+The analysis shows that flights with additional in-flight features generally have higher coach ticket prices.
+
+Flights that provide meals have an average coach ticket price of approximately \$402.57, while flights without meals have an average price of about \$371.95. This indicates that meal service slightly increases ticket prices.
+
+Flights with in-flight entertainment have a noticeably higher average coach ticket price (\$394.10) compared to flights without entertainment (\$332.33). This suggests that entertainment systems are associated with higher-priced flights.
+
+Similarly, flights offering WiFi have an average coach ticket price of approximately \$389.46, whereas flights without WiFi have a lower average price of about \$330.20.
+
+The boxplots also confirm these findings. In all three graphs, the median coach ticket price is higher for flights that include the feature.
+
+Among the three features, in-flight entertainment appears to be associated with the highest increase in coach ticket prices, followed closely by WiFi service. Meal availability has a smaller effect on price compared to entertainment and WiFi.
+
+\newpage
+\section*{Question no 7}
+
+How does the number of passengers change in relation to the length of flights?
+
+\addcontentsline{toc}{section}{Question no 7}
+\section{Solution:}
+% =========================
+% Python Code
+% =========================
+
+\subsection{\textcolor{blue}{Python Code}}
+
+\begin{lstlisting}[language=Python]
+
+# ==============================
+# Question 7
+# Relationship Between Passengers and Flight Duration
+# ==============================
+
+# Correlation between passengers and flight duration
+correlation = flight["passengers"].corr(
+    flight["hours"])
+
+print("Correlation =", correlation)
+
+# Scatter Plot
+
+plt.figure(figsize=(8,5))
+
+plt.scatter(
+    flight["hours"],
+    flight["passengers"],
+    color="blue")
+
+plt.title("Passengers vs Flight Duration")
+plt.xlabel("Flight Duration (Hours)")
+plt.ylabel("Number of Passengers")
+
+plt.show()
+
+# Linear Regression Model
+
+from sklearn.linear_model import LinearRegression
+
+# Independent variable
+X = flight[["hours"]]
+
+# Dependent variable
+y = flight["passengers"]
+
+# Create model
+model_pass = LinearRegression()
+
+# Fit model
+model_pass.fit(X, y)
+\end{lstlisting}
+\newpage
+\begin{lstlisting}
+# Predicted values
+y_pred = model_pass.predict(X)
+
+# Regression equation
+intercept = model_pass.intercept_
+slope = model_pass.coef_[0]
+
+print("\nRegression Equation:")
+print(f"y = {intercept:.2f} + ({slope:.2f})x")
+
+# Scatter Plot with Regression Line
+
+plt.figure(figsize=(8,5))
+
+plt.scatter(
+    flight["hours"],
+    flight["passengers"],
+    color="blue"
+)
+
+plt.plot(
+    flight["hours"],
+    y_pred,
+    color="red",
+    linewidth=2
+)
+
+plt.title("Passengers vs Flight Duration")
+plt.xlabel("Flight Duration (Hours)")
+plt.ylabel("Number of Passengers")
+
+plt.show()
+
+# Average Passengers by Flight Duration
+
+avg_passengers = flight.groupby(
+    "hours"
+)["passengers"].mean()
+
+print("\nAverage Passengers by Flight Duration:")
+print(avg_passengers)
+
+\end{lstlisting}
+
+% =========================
+% Results
+% =========================
+
+\subsection{\textcolor{purple}{Results}}
+
+\begin{verbatim}
+Correlation = 0.15860443084853001
+
+Regression Equation:
+y = 204.21 + (1.13)x
+
+
+Average Passengers by Flight Duration:
+
+1    202.71
+2    208.61
+3    208.59
+4    208.72
+5    210.78
+6    210.83
+7    208.79
+8    217.50
+\end{verbatim}
+
+% =========================
+% Scatter Plot
+% =========================
+
+\subsection{\textcolor{red}{Scatter Plot}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{scat_7.1.png}
+\caption{Passengers vs Flight Duration}
+\end{figure}
+
+% =========================
+% Regression Line Graph
+% =========================
+
+\subsection{\textcolor{red}{Regression Line Graph}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{scat_7.2.png}
+\caption{Passengers vs Flight Duration with Regression Line}
+\end{figure}
+
+\subsection{\textcolor{purple}{Regression Equation}}
+
+The regression equation is:
+
+\[
+y = 204.21 + 1.13x
+\]
+
+Where,
+
+\begin{itemize}
+    \item $y$ = Number of Passengers
+    \item $x$ = Flight Duration (Hours)
+\end{itemize}
+
+% =========================
+% Interpretation
+% =========================
+
+\subsection{\textcolor{teal}{Interpretation}}
+
+The correlation coefficient between flight duration and number of passengers is 0.159, which indicates a very weak positive relationship between the two variables.
+
+The scatter plot shows that passenger numbers remain relatively stable across different flight durations. Most flights carry around 200 to 220 passengers regardless of the number of hours.
+
+The regression line has a slight upward slope, suggesting that passenger numbers increase slightly as flight duration increases. According to the regression equation, each additional hour of flight duration increases the number of passengers by approximately 1.13 passengers on average.
+
+However, the relationship is very weak because the points are widely scattered and the correlation value is low. Therefore, flight duration does not strongly affect the number of passengers.
+
+
+
+\section*{Question no 8}
+
+What is the relationship between coach and first-class prices on weekends compared to weekdays?
+
+\addcontentsline{toc}{section}{Question no 8}
+\section{Solution:}
+% =========================
+% Python Code
+% =========================
+
+\subsection{\textcolor{blue}{Python Code}}
+
+\begin{lstlisting}[language=Python]
+
+# ==============================
+# Question 8
+# Relationship Between Coach and First-Class Prices
+# on Weekends vs Weekdays
+# ==============================
+# Average Prices by Weekend
+
+avg_prices = flight.groupby(
+    "weekend"
+)[["coach_price", "firstclass_price"]].mean()
+
+print("Average Prices by Weekend:")
+print(avg_prices)
+
+# Boxplot for Coach Prices
+plt.figure(figsize=(8,5))
+flight.boxplot(
+    column="coach_price",
+    by="weekend",
+    patch_artist=True,
+    boxprops=dict(facecolor="skyblue"))
+plt.title("Coach Prices on Weekends vs Weekdays")
+plt.suptitle("")
+plt.xlabel("Weekend")
+plt.ylabel("Coach Price")
+plt.show()
+
+# Boxplot for First-Class Prices
+plt.figure(figsize=(8,5))
+flight.boxplot(
+    column="firstclass_price",
+    by="weekend",
+    patch_artist=True,
+    boxprops=dict(facecolor="orange"))
+plt.title("First-Class Prices on Weekends vs Weekdays")
+plt.suptitle("")
+plt.xlabel("Weekend")
+plt.ylabel("First-Class Price")
+plt.show()
+\end{lstlisting}
+\newpage
+\begin{lstlisting}
+# Correlation on Weekdays
+
+weekday_data = flight[flight["weekend"] == "No"]
+
+weekday_corr = weekday_data["coach_price"].corr(
+    weekday_data["firstclass_price"]
+)
+
+print("\nCorrelation on Weekdays =", weekday_corr)
+
+# Correlation on Weekends
+
+weekend_data = flight[flight["weekend"] == "Yes"]
+
+weekend_corr = weekend_data["coach_price"].corr(
+    weekend_data["firstclass_price"]
+)
+
+print("Correlation on Weekends =", weekend_corr)
+
+\end{lstlisting}
+
+% =========================
+% Results
+% =========================
+
+\subsection{\textcolor{purple}{Results}}
+
+\begin{verbatim}
+Average Prices by Weekend:
+
+         coach_price   firstclass_price
+
+No        328.11          1256.17
+Yes       406.86          1555.65
+
+
+Correlation on Weekdays = 0.6197982932381213
+
+Correlation on Weekends = 0.4923473967994085
+\end{verbatim}
+
+% =========================
+% Boxplot 1
+% =========================
+
+\subsection{\textcolor{red}{Coach Prices on Weekends vs Weekdays}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{box_8.1.png}
+\caption{Coach Prices on Weekends vs Weekdays}
+\end{figure}
+
+% =========================
+% Boxplot 2
+% =========================
+
+\subsection{\textcolor{red}{First-Class Prices on Weekends vs Weekdays}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{box_8.2.png}
+\caption{First-Class Prices on Weekends vs Weekdays}
+\end{figure}
+
+% =========================
+% Interpretation
+% =========================
+
+\subsection{\textcolor{teal}{Interpretation}}
+
+The analysis shows that both coach ticket prices and first-class ticket prices are generally higher on weekends compared to weekdays.
+
+The average coach ticket price on weekdays is approximately \$328.11, while on weekends it increases to about \$406.86.
+
+Similarly, the average first-class ticket price rises from approximately \$1256.17 on weekdays to about \$1555.65 on weekends.
+
+The boxplots clearly show that the median prices for both coach and first-class tickets are higher during weekends. Weekend flights also show a wider spread in prices, indicating greater price variation.
+
+The correlation between coach and first-class prices on weekdays is 0.620, which indicates a moderately strong positive relationship. On weekends, the correlation decreases slightly to 0.492, indicating a moderate positive relationship.
+
+This means that although higher coach prices are generally associated with higher first-class prices in both cases, the relationship is somewhat stronger during weekdays than weekends.
+
+
+\section*{Question no 9}
+
+How do coach prices differ for redeyes and non-redeyes on each day of the week?
+
+\addcontentsline{toc}{section}{Question no 9}
+\section{Solution:}
+% =========================
+% Python Code
+% =========================
+
+\subsection{\textcolor{blue}{Python Code}}
+
+\begin{lstlisting}[language=Python]
+# ==============================
+# Question 9
+# Coach Prices for Redeye and Non-Redeye Flights
+# by Day of Week
+# ==============================
+# Average Coach Prices by Day and Redeye
+avg_prices = flight.groupby(
+    ["day_of_week", "redeye"])
+    ["coach_price"].mean()
+print("Average Coach Prices by Day and Redeye:")
+print(avg_prices)
+# Boxplot for Redeye vs Non-Redeye
+plt.figure(figsize=(8,5))
+flight.boxplot(
+    column="coach_price",
+    by="redeye",
+    patch_artist=True,
+    boxprops=dict(facecolor="skyblue"))
+plt.title("Coach Prices for Redeye vs Non-Redeye Flights")
+plt.suptitle("")
+plt.xlabel("Redeye Flight")
+plt.ylabel("Coach Price")
+plt.show()
+\end{lstlisting}
+\newpage
+\begin{lstlisting}
+# Interaction Plot
+
+import seaborn as sns
+
+plt.figure(figsize=(10,5))
+
+sns.lineplot(
+    data=flight,
+    x="day_of_week",
+    y="coach_price",
+    hue="redeye",
+    marker="o"
+)
+
+plt.title("Average Coach Prices by Day and Redeye")
+plt.xlabel("Day of Week")
+plt.ylabel("Average Coach Price")
+
+plt.show()
+
+\end{lstlisting}
+
+% =========================
+% Results
+% =========================
+
+\subsection{\textcolor{purple}{Results}}
+
+\begin{verbatim}
+Average Coach Prices by Day and Redeye:
+
+Friday       No     404.16
+
+Monday       No     354.84
+Monday       Yes    296.62
+
+Saturday     No     419.58
+Saturday     Yes    298.42
+
+Sunday       No     407.29
+Sunday       Yes    229.15
+
+Thursday     No     305.42
+
+Tuesday      No     330.54
+Tuesday      Yes    414.39
+
+Wednesday    No     287.68
+\end{verbatim}
+
+% =========================
+% Boxplot
+% =========================
+
+\subsection{\textcolor{red}{Coach Prices for Redeye vs Non-Redeye Flights}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{box_9.png}
+\caption{Coach Prices for Redeye vs Non-Redeye Flights}
+\end{figure}
+
+% =========================
+% Interaction Plot
+% =========================
+
+\subsection{\textcolor{red}{Average Coach Prices by Day and Redeye}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.9\textwidth]{plot_9.png}
+\caption{Average Coach Prices by Day and Redeye}
+\end{figure}
+\newpage
+% =========================
+% Interpretation
+% =========================
+
+\subsection{\textcolor{teal}{Interpretation}}
+
+The analysis shows that non-redeye flights generally have higher coach ticket prices than redeye flights on most days of the week.
+
+The boxplot indicates that non-redeye flights have a higher median coach price and a wider variation in ticket prices compared to redeye flights.
+
+From the interaction plot, non-redeye flights show relatively high prices on Friday, Saturday, and Sunday, with average prices above \$400. In contrast, redeye flights usually have lower prices, especially on Sunday where the average coach price is approximately \$229.15.
+
+An exception appears on Tuesday, where redeye flights have a higher average coach price (\$414.39) than non-redeye flights (\$330.54).
+
+Overall, redeye flights tend to be cheaper than non-redeye flights for most days of the week. This suggests that overnight flights are generally offered at lower prices, possibly to attract more passengers.
+
+
+
+
+\section*{Question no 10}
+
+Perform the analysis for appropriate variables:
+summary statistics, visualization, hypothesis testing,
+correlation analysis, regression analysis, and logistic regression.
+
+\addcontentsline{toc}{section}{Question no 10}
+\section{Solution:}
+% =========================
+% Python Code
+% =========================
+
+\subsection{\textcolor{blue}{Python Code}}
+
+\begin{lstlisting}[language=Python]
+
+# ==============================
+# Question 10
+# Overall Statistical Analysis
+# ==============================
+# Summary Statistics
+print(flight[[
+    "coach_price",
+    "firstclass_price",
+    "miles",
+    "passengers",
+    "delay",
+    "hours"
+]].describe())
+# Correlation Matrix
+correlation_matrix = flight[[
+    "coach_price",
+    "firstclass_price",
+    "miles",
+    "passengers",
+    "delay",
+    "hours"
+]].corr()
+print(correlation_matrix)
+\end{lstlisting}
+\newpage
+\begin{lstlisting}
+# Independent t-test
+from scipy.stats import ttest_ind
+weekend_prices = flight[
+    flight["weekend"] == "Yes"
+]["coach_price"]
+
+weekday_prices = flight[
+    flight["weekend"] == "No"
+]["coach_price"]
+
+t_stat, p_value = ttest_ind(
+    weekend_prices,
+    weekday_prices)
+
+print("t-statistic =", t_stat)
+print("p-value =", p_value)
+
+# Linear Regression
+from sklearn.linear_model import LinearRegression
+
+X = flight[["coach_price"]]
+y = flight["firstclass_price"]
+
+model = LinearRegression()
+
+model.fit(X, y)
+
+print(
+    "y =",
+    round(model.intercept_,2),
+    "+",
+    round(model.coef_[0],2),
+    "x"
+)
+
+# Logistic Regression
+from sklearn.linear_model import LogisticRegression
+flight["redeye_binary"] = flight["redeye"].map({
+    "Yes":1,
+    "No":0})
+X_log = flight[[
+    "coach_price",
+    "hours",
+    "delay"]]
+y_log = flight["redeye_binary"]
+log_model = LogisticRegression()
+log_model.fit(X_log, y_log)
+print("Logistic Regression Completed Successfully")
+
+\end{lstlisting}
+
+% =========================
+% Histogram
+% =========================
+
+\subsection{\textcolor{red}{Distribution of Coach Ticket Prices}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{his_10.png}
+\caption{Distribution of Coach Ticket Prices}
+\end{figure}
+
+% =========================
+% Boxplot
+% =========================
+
+\subsection{\textcolor{red}{Boxplot of Coach Ticket Prices}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{box_10.png}
+\caption{Boxplot of Coach Ticket Prices}
+\end{figure}
+
+% =========================
+% Bar Chart
+% =========================
+
+\subsection{\textcolor{red}{Flights by Day of Week}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.65\textwidth]{bar_10.png}
+\caption{Flights by Day of Week}
+\end{figure}
+
+\vspace{0.3cm}
+
+\subsection{\textcolor{red}{Correlation Heatmap}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{heat_10.png}
+\caption{Correlation Heatmap}
+\end{figure}
+
+% =========================
+% Results
+% =========================
+
+\subsection{\textcolor{purple}{Results}}
+
+\begin{verbatim}
+
+Independent t-test
+
+t-statistic = 9.338656970746412
+
+p-value = 2.0607479155760792e-17
+
+
+Linear Regression Equation:
+
+y = 823.53 + 1.67x
+
+
+Logistic Regression Completed Successfully
+
+\end{verbatim}
+
+% =========================
+% Correlation Matrix
+% =========================
+
+\subsection{\textcolor{purple}{Correlation Matrix}}
+
+\begin{verbatim}
+
+                  coach_price  firstclass_price
+coach_price          1.000000          0.698050
+firstclass_price     0.698050          1.000000
+miles                0.332224          0.288250
+passengers           0.296786          0.107536
+delay                0.069226          0.059584
+hours                0.310325          0.273756
+
+\end{verbatim}
+
+% =========================
+% Interpretation
+% =========================
+
+\subsection{\textcolor{teal}{Interpretation}}
+
+The histogram shows that most coach ticket prices are concentrated between \$300 and \$450, indicating a moderate distribution of ticket prices.
+
+The boxplot indicates that the median coach ticket price is around \$390, with a few lower-price outliers.
+
+The bar chart shows that most flights occur on Saturday and Sunday, while Wednesday and Thursday have the fewest flights.
+
+The correlation heatmap reveals a strong positive relationship between miles and hours (0.98), meaning longer distances require longer flight durations. Coach prices also have a strong positive correlation with first-class prices (0.70).
+
+The independent t-test result has a very small p-value, indicating a statistically significant difference between weekend and weekday coach ticket prices.
+
+The linear regression equation:
+
+\[
+y = 823.53 + 1.67x
+\]
+
+shows that first-class prices increase as coach ticket prices increase.
+
+Finally, logistic regression was successfully performed to predict redeye flights using coach price, hours, and delay variables.
+
+
+\end{document}

@@ -1,0 +1,949 @@
+import pandas as pd
+import numpy as np
+import seaborn as sns
+import statsmodels.api as sm
+import matplotlib.pyplot as plt
+import math
+import warnings
+warnings.filterwarnings("ignore")
+airline = pd.read_csv("D:/STAT-2205/PYTHON/flight_data.csv")
+
+# ==============================
+# Question 1
+# Coach Ticket Price Analysis
+# Random sample using ID
+flight = airline.sample(n=200, random_state=12210048)
+
+# Highest coach ticket price
+max_price = flight["coach_price"].max()
+
+# Lowest coach ticket price
+min_price = flight["coach_price"].min()
+
+# Average coach ticket price
+mean_price = flight["coach_price"].mean()
+
+# Median coach ticket price
+median_price = flight["coach_price"].median()
+
+# Standard deviation
+std_price = flight["coach_price"].std()
+
+# Display results
+print("Highest Coach Ticket Price =", max_price)
+print("Lowest Coach Ticket Price =", min_price)
+print("Average Coach Ticket Price =", mean_price)
+print("Median Coach Ticket Price =", median_price)
+print("Standard Deviation =", std_price)
+
+# Summary statistics
+print("\nSummary Statistics:")
+print(flight["coach_price"].describe())
+
+# ==============================
+# Histogram
+# ==============================
+
+plt.figure(figsize=(8,5))
+
+plt.hist(
+    flight["coach_price"],
+    bins=8,
+    color="skyblue",
+    edgecolor="black"
+)
+
+plt.title("Distribution of Coach Ticket Prices")
+plt.xlabel("Coach Ticket Price")
+plt.ylabel("Frequency")
+
+plt.show()
+
+# ==============================
+# Boxplot
+# ==============================
+
+plt.figure(figsize=(8,5))
+
+plt.boxplot(
+    flight["coach_price"],
+    patch_artist=True,
+    boxprops=dict(facecolor="lightgreen")
+)
+
+plt.title("Boxplot of Coach Ticket Prices")
+plt.ylabel("Coach Ticket Price")
+
+plt.show()
+
+# ==============================
+# Is $500 a Good Price?
+# ==============================
+
+if mean_price < 500:
+    print("\n$500 is relatively expensive compared to the average coach ticket price.")
+else:
+    print("\n$500 is a reasonable coach ticket price.")
+
+
+
+# ==============================
+# Question 2
+# 8-Hour Flight Price Analysis
+# ==============================
+
+# Flights with approximately 8-hour duration
+flight_8hr = flight[flight["hours"] == 8]
+
+# Highest price for 8-hour flights
+max_price = flight_8hr["coach_price"].max()
+
+# Lowest price for 8-hour flights
+min_price = flight_8hr["coach_price"].min()
+
+# Average price for 8-hour flights
+mean_price = flight_8hr["coach_price"].mean()
+
+# Median price
+median_price = flight_8hr["coach_price"].median()
+
+# Standard deviation
+std_price = flight_8hr["coach_price"].std()
+
+# Print results
+print("Highest Price =", max_price)
+print("Lowest Price =", min_price)
+print("Average Price =", mean_price)
+print("Median Price =", median_price)
+print("Standard Deviation =", std_price)
+
+# Summary statistics
+print("\nSummary Statistics:")
+print(flight_8hr["coach_price"].describe())
+
+# Histogram
+plt.figure(figsize=(8,5))
+
+plt.hist(
+    flight_8hr["coach_price"],
+    bins=5,
+    color="skyblue",
+    edgecolor="black"
+)
+
+plt.title("Distribution of 8-Hour Flight Prices")
+plt.xlabel("Coach Ticket Price")
+plt.ylabel("Frequency")
+
+plt.show()
+
+# Boxplot
+plt.figure(figsize=(8,5))
+
+plt.boxplot(
+    flight_8hr["coach_price"],
+    patch_artist=True,
+    boxprops=dict(facecolor="orange")
+)
+
+plt.title("Boxplot of 8-Hour Flight Prices")
+plt.ylabel("Coach Ticket Price")
+
+plt.show()
+
+# Price comparison
+if mean_price < 500:
+    print("\n$500 seems expensive but more reasonable for 8-hour flights.")
+else:
+    print("\n$500 seems reasonable for 8-hour flights.")
+
+# ==============================
+# Question 3
+# Flight Delay Analysis
+# ==============================
+
+# Summary statistics for delays
+print(flight["delay"].describe())
+
+# Mean delay
+mean_delay = flight["delay"].mean()
+
+# Median delay
+median_delay = flight["delay"].median()
+
+# Standard deviation
+std_delay = flight["delay"].std()
+
+# Maximum delay
+max_delay = flight["delay"].max()
+
+# Minimum delay
+min_delay = flight["delay"].min()
+
+# Print results
+print("\nMean Delay =", mean_delay)
+print("Median Delay =", median_delay)
+print("Standard Deviation =", std_delay)
+print("Maximum Delay =", max_delay)
+print("Minimum Delay =", min_delay)
+
+# Histogram of delays
+plt.figure(figsize=(8,5))
+
+plt.hist(
+    flight["delay"],
+    bins=10,
+    color="skyblue",
+    edgecolor="black"
+)
+
+plt.title("Distribution of Flight Delays")
+plt.xlabel("Delay Time (Minutes)")
+plt.ylabel("Frequency")
+
+plt.show()
+
+# Boxplot of delays
+plt.figure(figsize=(8,5))
+
+plt.boxplot(
+    flight["delay"],
+    patch_artist=True,
+    boxprops=dict(facecolor="orange")
+)
+
+plt.title("Boxplot of Flight Delays")
+plt.ylabel("Delay Time (Minutes)")
+
+plt.show()
+
+# Number of significant delays (more than 60 minutes)
+significant_delays = (flight["delay"] > 60).sum()
+
+# Percentage of significant delays
+significant_percentage = ((flight["delay"] > 60).mean()) * 100
+
+print("\nNumber of Significant Delays =", significant_delays)
+print("Percentage of Significant Delays =", significant_percentage)
+
+
+# ==============================
+# Question 4
+# Correlation Analysis
+# Coach Price vs Other Variables
+# ==============================
+
+# Select numeric variables
+variables = flight[[
+    "coach_price",
+    "miles",
+    "passengers",
+    "delay",
+    "hours"
+]]
+
+# Correlation matrix
+correlation_matrix = variables.corr()
+
+print(correlation_matrix)
+
+# ==============================
+# Correlation Heatmap
+# ==============================
+
+import seaborn as sns
+
+plt.figure(figsize=(8,6))
+
+sns.heatmap(
+    correlation_matrix,
+    annot=True,
+    cmap="coolwarm",
+    fmt=".2f"
+)
+
+plt.title("Correlation Heatmap")
+
+plt.show()
+
+# =====================================
+# Coach Price vs Flight Distance
+# =====================================
+
+plt.figure(figsize=(8,5))
+
+plt.scatter(
+    flight["miles"],
+    flight["coach_price"],
+    color="blue"
+)
+
+plt.title("Coach Price vs Flight Distance")
+plt.xlabel("Miles")
+plt.ylabel("Coach Price")
+
+plt.show()
+
+# =====================================
+# Coach Price vs Number of Passengers
+# =====================================
+
+plt.figure(figsize=(8,5))
+
+plt.scatter(
+    flight["passengers"],
+    flight["coach_price"],
+    color="green"
+)
+
+plt.title("Coach Price vs Number of Passengers")
+plt.xlabel("Passengers")
+plt.ylabel("Coach Price")
+
+plt.show()
+
+# =====================================
+# Coach Price vs Delay
+# =====================================
+
+plt.figure(figsize=(8,5))
+
+plt.scatter(
+    flight["delay"],
+    flight["coach_price"],
+    color="red"
+)
+
+plt.title("Coach Price vs Delay")
+plt.xlabel("Delay (Minutes)")
+plt.ylabel("Coach Price")
+
+plt.show()
+
+# =====================================
+# Coach Price vs Flight Duration
+# =====================================
+
+plt.figure(figsize=(8,5))
+
+plt.scatter(
+    flight["hours"],
+    flight["coach_price"],
+    color="purple"
+)
+
+plt.title("Coach Price vs Flight Duration")
+plt.xlabel("Hours")
+plt.ylabel("Coach Price")
+
+plt.show()
+
+
+# ==============================
+# Question 5
+# Relationship Between Coach and First-Class Prices
+# ==============================
+
+# Correlation between coach and first-class prices
+correlation = flight["coach_price"].corr(
+    flight["firstclass_price"]
+)
+
+print("Correlation =", correlation)
+
+# =====================================
+# Scatter Plot
+# =====================================
+
+plt.figure(figsize=(8,5))
+
+plt.scatter(
+    flight["coach_price"],
+    flight["firstclass_price"],
+    color="blue"
+)
+
+plt.title("Coach Price vs First-Class Price")
+plt.xlabel("Coach Ticket Price")
+plt.ylabel("First-Class Ticket Price")
+
+plt.show()
+
+# =====================================
+# Linear Regression Model
+# =====================================
+
+from sklearn.linear_model import LinearRegression
+import numpy as np
+
+# Independent variable
+X = flight[["coach_price"]]
+
+# Dependent variable
+y = flight["firstclass_price"]
+
+# Create model
+model_fc = LinearRegression()
+
+# Fit model
+model_fc.fit(X, y)
+
+# Predicted values
+y_pred = model_fc.predict(X)
+
+# Regression equation
+intercept = model_fc.intercept_
+slope = model_fc.coef_[0]
+
+print("\nRegression Equation:")
+print(f"y = {intercept:.2f} + {slope:.2f}x")
+
+# =====================================
+# Scatter Plot with Regression Line
+# =====================================
+
+plt.figure(figsize=(8,5))
+
+plt.scatter(
+    flight["coach_price"],
+    flight["firstclass_price"],
+    color="blue"
+)
+
+plt.plot(
+    flight["coach_price"],
+    y_pred,
+    color="red",
+    linewidth=2
+)
+
+plt.title("Coach Price vs First-Class Price")
+plt.xlabel("Coach Ticket Price")
+plt.ylabel("First-Class Ticket Price")
+
+plt.show()
+
+
+
+# ==============================
+# Question 6
+# Relationship Between Coach Prices and In-Flight Features
+# ==============================
+
+# =====================================
+# Average Coach Price by Meal Availability
+# =====================================
+
+meal_price = flight.groupby(
+    "inflight_meal"
+)["coach_price"].mean()
+
+print("Average Coach Price by Meal Availability:")
+print(meal_price)
+
+# =====================================
+# Average Coach Price by Entertainment
+# =====================================
+
+ent_price = flight.groupby(
+    "inflight_entertainment"
+)["coach_price"].mean()
+
+print("\nAverage Coach Price by Entertainment:")
+print(ent_price)
+
+# =====================================
+# Average Coach Price by WiFi
+# =====================================
+
+wifi_price = flight.groupby(
+    "inflight_wifi"
+)["coach_price"].mean()
+
+print("\nAverage Coach Price by WiFi:")
+print(wifi_price)
+
+# =====================================
+# Boxplot for Meal
+# =====================================
+
+plt.figure(figsize=(8,5))
+
+flight.boxplot(
+    column="coach_price",
+    by="inflight_meal",
+    patch_artist=True,
+    boxprops=dict(facecolor="skyblue")
+)
+
+plt.title("Coach Price by In-Flight Meal")
+plt.suptitle("")
+plt.xlabel("Meal Available")
+plt.ylabel("Coach Price")
+
+plt.show()
+
+# =====================================
+# Boxplot for Entertainment
+# =====================================
+
+plt.figure(figsize=(8,5))
+
+flight.boxplot(
+    column="coach_price",
+    by="inflight_entertainment",
+    patch_artist=True,
+    boxprops=dict(facecolor="lightgreen")
+)
+
+plt.title("Coach Price by In-Flight Entertainment")
+plt.suptitle("")
+plt.xlabel("Entertainment Available")
+plt.ylabel("Coach Price")
+
+plt.show()
+
+# =====================================
+# Boxplot for WiFi
+# =====================================
+
+plt.figure(figsize=(8,5))
+
+flight.boxplot(
+    column="coach_price",
+    by="inflight_wifi",
+    patch_artist=True,
+    boxprops=dict(facecolor="orange")
+)
+
+plt.title("Coach Price by In-Flight WiFi")
+plt.suptitle("")
+plt.xlabel("WiFi Available")
+plt.ylabel("Coach Price")
+
+plt.show()
+
+
+
+# ==============================
+# Question 7
+# Relationship Between Passengers and Flight Duration
+# ==============================
+
+# Correlation between passengers and flight duration
+correlation = flight["passengers"].corr(
+    flight["hours"]
+)
+
+print("Correlation =", correlation)
+
+# =====================================
+# Scatter Plot
+# =====================================
+
+plt.figure(figsize=(8,5))
+
+plt.scatter(
+    flight["hours"],
+    flight["passengers"],
+    color="blue"
+)
+
+plt.title("Passengers vs Flight Duration")
+plt.xlabel("Flight Duration (Hours)")
+plt.ylabel("Number of Passengers")
+
+plt.show()
+
+# =====================================
+# Linear Regression Model
+# =====================================
+
+from sklearn.linear_model import LinearRegression
+
+# Independent variable
+X = flight[["hours"]]
+
+# Dependent variable
+y = flight["passengers"]
+
+# Create model
+model_pass = LinearRegression()
+
+# Fit model
+model_pass.fit(X, y)
+
+# Predicted values
+y_pred = model_pass.predict(X)
+
+# Regression equation
+intercept = model_pass.intercept_
+slope = model_pass.coef_[0]
+
+print("\nRegression Equation:")
+print(f"y = {intercept:.2f} + ({slope:.2f})x")
+
+# =====================================
+# Scatter Plot with Regression Line
+# =====================================
+
+plt.figure(figsize=(8,5))
+
+plt.scatter(
+    flight["hours"],
+    flight["passengers"],
+    color="blue"
+)
+
+plt.plot(
+    flight["hours"],
+    y_pred,
+    color="red",
+    linewidth=2
+)
+
+plt.title("Passengers vs Flight Duration")
+plt.xlabel("Flight Duration (Hours)")
+plt.ylabel("Number of Passengers")
+
+plt.show()
+
+# =====================================
+# Average Passengers by Flight Duration
+# =====================================
+
+avg_passengers = flight.groupby(
+    "hours"
+)["passengers"].mean()
+
+print("\nAverage Passengers by Flight Duration:")
+print(avg_passengers)
+
+
+
+# ==============================
+# Question 8
+# Relationship Between Coach and First-Class Prices
+# on Weekends vs Weekdays
+# ==============================
+
+# =====================================
+# Average Prices by Weekend
+# =====================================
+
+avg_prices = flight.groupby(
+    "weekend"
+)[["coach_price", "firstclass_price"]].mean()
+
+print("Average Prices by Weekend:")
+print(avg_prices)
+
+# =====================================
+# Boxplot for Coach Prices
+# =====================================
+
+plt.figure(figsize=(8,5))
+
+flight.boxplot(
+    column="coach_price",
+    by="weekend",
+    patch_artist=True,
+    boxprops=dict(facecolor="skyblue")
+)
+
+plt.title("Coach Prices on Weekends vs Weekdays")
+plt.suptitle("")
+plt.xlabel("Weekend")
+plt.ylabel("Coach Price")
+
+plt.show()
+
+# =====================================
+# Boxplot for First-Class Prices
+# =====================================
+
+plt.figure(figsize=(8,5))
+
+flight.boxplot(
+    column="firstclass_price",
+    by="weekend",
+    patch_artist=True,
+    boxprops=dict(facecolor="orange")
+)
+
+plt.title("First-Class Prices on Weekends vs Weekdays")
+plt.suptitle("")
+plt.xlabel("Weekend")
+plt.ylabel("First-Class Price")
+
+plt.show()
+
+# =====================================
+# Correlation on Weekdays
+# =====================================
+
+weekday_data = flight[flight["weekend"] == "No"]
+
+weekday_corr = weekday_data["coach_price"].corr(
+    weekday_data["firstclass_price"]
+)
+
+print("\nCorrelation on Weekdays =", weekday_corr)
+
+# =====================================
+# Correlation on Weekends
+# =====================================
+
+weekend_data = flight[flight["weekend"] == "Yes"]
+
+weekend_corr = weekend_data["coach_price"].corr(
+    weekend_data["firstclass_price"]
+)
+
+print("Correlation on Weekends =", weekend_corr)
+
+
+
+# ==============================
+# Question 9
+# Coach Prices for Redeye and Non-Redeye Flights
+# by Day of Week
+# ==============================
+
+# =====================================
+# Average Coach Prices by Day and Redeye
+# =====================================
+
+avg_prices = flight.groupby(
+    ["day_of_week", "redeye"]
+)["coach_price"].mean()
+
+print("Average Coach Prices by Day and Redeye:")
+print(avg_prices)
+
+# =====================================
+# Boxplot for Redeye vs Non-Redeye
+# =====================================
+
+plt.figure(figsize=(8,5))
+
+flight.boxplot(
+    column="coach_price",
+    by="redeye",
+    patch_artist=True,
+    boxprops=dict(facecolor="skyblue")
+)
+
+plt.title("Coach Prices for Redeye vs Non-Redeye Flights")
+plt.suptitle("")
+plt.xlabel("Redeye Flight")
+plt.ylabel("Coach Price")
+
+plt.show()
+
+# =====================================
+# Interaction Plot
+# =====================================
+
+import seaborn as sns
+
+plt.figure(figsize=(10,5))
+
+sns.lineplot(
+    data=flight,
+    x="day_of_week",
+    y="coach_price",
+    hue="redeye",
+    marker="o"
+)
+
+plt.title("Average Coach Prices by Day and Redeye")
+plt.xlabel("Day of Week")
+plt.ylabel("Average Coach Price")
+
+plt.show()
+
+
+
+# ==============================
+# Question 10
+# Overall Statistical Analysis
+# ==============================
+
+# =====================================
+# Summary Statistics
+# =====================================
+
+print("Summary Statistics:\n")
+
+print(flight[[
+    "coach_price",
+    "firstclass_price",
+    "miles",
+    "passengers",
+    "delay",
+    "hours"
+]].describe())
+
+# =====================================
+# Histogram of Coach Prices
+# =====================================
+
+plt.figure(figsize=(8,5))
+
+plt.hist(
+    flight["coach_price"],
+    bins=10,
+    color="skyblue",
+    edgecolor="black"
+)
+
+plt.title("Distribution of Coach Ticket Prices")
+plt.xlabel("Coach Ticket Price")
+plt.ylabel("Frequency")
+
+plt.show()
+
+# =====================================
+# Boxplot of Coach Prices
+# =====================================
+
+plt.figure(figsize=(8,5))
+
+plt.boxplot(
+    flight["coach_price"],
+    patch_artist=True,
+    boxprops=dict(facecolor="lightgreen")
+)
+
+plt.title("Boxplot of Coach Ticket Prices")
+plt.ylabel("Coach Ticket Price")
+
+plt.show()
+
+# =====================================
+# Bar Chart of Flights by Day
+# =====================================
+
+plt.figure(figsize=(8,5))
+
+flight["day_of_week"].value_counts().plot(
+    kind="bar",
+    color="lightgreen",
+    edgecolor="black"
+)
+
+plt.title("Flights by Day of Week")
+plt.xlabel("Day of Week")
+plt.ylabel("Frequency")
+
+plt.show()
+
+# =====================================
+# Correlation Matrix
+# =====================================
+
+correlation_matrix = flight[[
+    "coach_price",
+    "firstclass_price",
+    "miles",
+    "passengers",
+    "delay",
+    "hours"
+]].corr()
+
+print("\nCorrelation Matrix:\n")
+print(correlation_matrix)
+
+# =====================================
+# Heatmap
+# =====================================
+
+import seaborn as sns
+
+plt.figure(figsize=(8,6))
+
+sns.heatmap(
+    correlation_matrix,
+    annot=True,
+    cmap="coolwarm",
+    fmt=".2f"
+)
+
+plt.title("Correlation Heatmap")
+
+plt.show()
+
+# =====================================
+# Independent t-test
+# Weekend vs Weekday Coach Prices
+# =====================================
+
+from scipy.stats import ttest_ind
+
+weekend_prices = flight[
+    flight["weekend"] == "Yes"
+]["coach_price"]
+
+weekday_prices = flight[
+    flight["weekend"] == "No"
+]["coach_price"]
+
+t_stat, p_value = ttest_ind(
+    weekend_prices,
+    weekday_prices
+)
+
+print("\nIndependent t-test")
+print("t-statistic =", t_stat)
+print("p-value =", p_value)
+
+# =====================================
+# Linear Regression
+# Predict First-Class Price
+# =====================================
+
+from sklearn.linear_model import LinearRegression
+
+X = flight[["coach_price"]]
+y = flight["firstclass_price"]
+
+model = LinearRegression()
+
+model.fit(X, y)
+
+print("\nLinear Regression Equation:")
+print(
+    "y =",
+    round(model.intercept_,2),
+    "+",
+    round(model.coef_[0],2),
+    "x"
+)
+
+# =====================================
+# Logistic Regression
+# Predict Redeye Flights
+# =====================================
+
+from sklearn.linear_model import LogisticRegression
+
+# Convert Yes/No to 1/0
+flight["redeye_binary"] = flight["redeye"].map({
+    "Yes":1,
+    "No":0
+})
+
+X_log = flight[[
+    "coach_price",
+    "hours",
+    "delay"
+]]
+
+y_log = flight["redeye_binary"]
+
+log_model = LogisticRegression()
+
+log_model.fit(X_log, y_log)
+
+print("\nLogistic Regression Completed Successfully")

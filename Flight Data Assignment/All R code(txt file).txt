@@ -1,0 +1,625 @@
+# ==============================
+# Question 01
+# ==============================
+airline <- read.csv("D:/STAT-2205/R/flight_data.csv")
+
+# Random sample using your ID
+set.seed(12210048)
+flight <- airline[sample(nrow(airline), 200), ]
+
+# Highest coach ticket price
+max(flight$coach_price, na.rm = TRUE)
+
+# Lowest coach ticket price
+min(flight$coach_price, na.rm = TRUE)
+
+# Average coach ticket price
+mean(flight$coach_price, na.rm = TRUE)
+
+# Median coach ticket price
+median(flight$coach_price, na.rm = TRUE)
+
+# Summary statistics
+summary(flight$coach_price)
+
+# Standard deviation
+sd(flight$coach_price, na.rm = TRUE)
+
+# Histogram of coach ticket prices
+hist(flight$coach_price,
+     main = "Distribution of Coach Ticket Prices",
+     xlab = "Coach Ticket Price",
+     col = "skyblue",
+     border = "black")
+
+# Boxplot of coach ticket prices
+boxplot(flight$coach_price,
+        main = "Boxplot of Coach Ticket Prices",
+        ylab = "Coach Ticket Price",
+        col = "lightgreen")
+
+# Check if $500 seems reasonable
+avg_price<- mean(flight$coach_price, na.rm = TRUE)
+avg_price
+500
+
+
+# ==============================
+# Question 02
+# ==============================
+
+# Flights with approximately 8-hour duration
+flight_8hr <- subset(flight, hours == 8)
+
+# Highest price for 8-hour flights
+max(flight_8hr$coach_price, na.rm = TRUE)
+
+# Lowest price for 8-hour flights
+min(flight_8hr$coach_price, na.rm = TRUE)
+
+# Average price for 8-hour flights
+mean(flight_8hr$coach_price, na.rm = TRUE)
+
+# Median price
+median(flight_8hr$coach_price, na.rm = TRUE)
+
+# Summary statistics
+summary(flight_8hr$coach_price)
+
+# Standard deviation
+sd(flight_8hr$coach_price, na.rm = TRUE)
+
+# Histogram
+hist(flight_8hr$coach_price,
+     main = "Distribution of 8-Hour Flight Prices",
+     xlab = "Coach Ticket Price",
+     col = "skyblue",
+     border = "black")
+
+# Boxplot
+boxplot(flight_8hr$coach_price,
+        main = "Boxplot of 8-Hour Flight Prices",
+        ylab = "Coach Ticket Price",
+        col = "orange")
+
+
+# ==============================
+# Question 03
+# ==============================
+
+# Summary statistics for delays
+summary(flight$delay)
+
+# Mean delay
+mean(flight$delay, na.rm = TRUE)
+
+# Median delay
+median(flight$delay, na.rm = TRUE)
+
+# Standard deviation
+sd(flight$delay, na.rm = TRUE)
+
+# Maximum delay
+max(flight$delay, na.rm = TRUE)
+
+# Minimum delay
+min(flight$delay, na.rm = TRUE)
+
+# Histogram of delays
+hist(flight$delay,
+     main = "Distribution of Flight Delays",
+     xlab = "Delay Time (Minutes)",
+     col = "skyblue",
+     border = "black")
+
+# Boxplot of delays
+boxplot(flight$delay,
+        main = "Boxplot of Flight Delays",
+        ylab = "Delay Time (Minutes)",
+        col = "orange")
+
+# Number of significant delays (more than 60 minutes)
+sum(flight$delay > 60, na.rm = TRUE)
+
+# Percentage of significant delays
+mean(flight$delay > 60, na.rm = TRUE) * 100
+
+
+# ==============================
+# Question 04
+# ==============================
+
+# Select numeric variables
+variables <- flight[, c("coach_price",
+                        "miles",
+                        "passengers",
+                        "delay",
+                        "hours")]
+
+# Correlation matrix
+cor(variables, use = "complete.obs")
+
+# Scatter plots
+
+# Coach price vs miles
+plot(flight$miles,
+     flight$coach_price,
+     main = "Coach Price vs Flight Distance",
+     xlab = "Miles",
+     ylab = "Coach Price",
+     col = "blue",
+     pch = 19)
+
+# Coach price vs passengers
+plot(flight$passengers,
+     flight$coach_price,
+     main = "Coach Price vs Number of Passengers",
+     xlab = "Passengers",
+     ylab = "Coach Price",
+     col = "green",
+     pch = 19)
+
+# Coach price vs delay
+plot(flight$delay,
+     flight$coach_price,
+     main = "Coach Price vs Delay",
+     xlab = "Delay (Minutes)",
+     ylab = "Coach Price",
+     col = "red",
+     pch = 19)
+
+# Coach price vs hours
+plot(flight$hours,
+     flight$coach_price,
+     main = "Coach Price vs Flight Duration",
+     xlab = "Hours",
+     ylab = "Coach Price",
+     col = "purple",
+     pch = 19)
+
+
+# ==============================
+# Question 05
+# ==============================
+
+# Correlation between coach and first-class prices
+cor(flight$coach_price,
+    flight$firstclass_price,
+    use = "complete.obs")
+
+# Scatter plot
+plot(flight$coach_price,
+     flight$firstclass_price,
+     main = "Coach Price vs First-Class Price",
+     xlab = "Coach Ticket Price",
+     ylab = "First-Class Ticket Price",
+     col = "blue",
+     pch = 19)
+
+# Linear regression model
+model_fc <- lm(firstclass_price ~ coach_price, data = flight)
+
+# Regression summary
+summary(model_fc)
+
+# Add regression line
+abline(model_fc, col = "red", lwd = 2)
+
+
+# ==============================
+# Question 06
+# ==============================
+
+# Average coach price by meal availability
+aggregate(coach_price ~ inflight_meal,
+          data = flight,
+          mean)
+
+# Average coach price by entertainment availability
+aggregate(coach_price ~ inflight_entertainment,
+          data = flight,
+          mean)
+
+# Average coach price by WiFi availability
+aggregate(coach_price ~ inflight_wifi,
+          data = flight,
+          mean)
+
+# Boxplot for meal
+boxplot(coach_price ~ inflight_meal,
+        data = flight,
+        main = "Coach Price by In-Flight Meal",
+        xlab = "Meal Available",
+        ylab = "Coach Price",
+        col = "skyblue")
+
+# Boxplot for entertainment
+boxplot(coach_price ~ inflight_entertainment,
+        data = flight,
+        main = "Coach Price by In-Flight Entertainment",
+        xlab = "Entertainment Available",
+        ylab = "Coach Price",
+        col = "lightgreen")
+
+# Boxplot for WiFi
+boxplot(coach_price ~ inflight_wifi,
+        data = flight,
+        main = "Coach Price by In-Flight WiFi",
+        xlab = "WiFi Available",
+        ylab = "Coach Price",
+        col = "orange")
+
+
+# ==============================
+# Question 07
+# ==============================
+
+# Correlation between passengers and flight duration
+cor(flight$passengers,
+    flight$hours,
+    use = "complete.obs")
+
+# Scatter plot
+plot(flight$hours,
+     flight$passengers,
+     main = "Passengers vs Flight Duration",
+     xlab = "Flight Duration (Hours)",
+     ylab = "Number of Passengers",
+     col = "blue",
+     pch = 19)
+
+# Linear regression model
+model_pass <- lm(passengers ~ hours, data = flight)
+
+# Regression summary
+summary(model_pass)
+
+# Add regression line
+abline(model_pass, col = "red", lwd = 2)
+
+# Average passengers by flight duration
+aggregate(passengers ~ hours,
+          data = flight,
+          mean)
+
+
+# ==============================
+# Question 08
+# ==============================
+
+# Average prices by weekend
+aggregate(cbind(coach_price, firstclass_price) ~ weekend,
+          data = flight,
+          mean)
+
+# Boxplot for coach prices
+boxplot(coach_price ~ weekend,
+        data = flight,
+        main = "Coach Prices on Weekends vs Weekdays",
+        xlab = "Weekend",
+        ylab = "Coach Price",
+        col = "skyblue")
+
+# Boxplot for first-class prices
+boxplot(firstclass_price ~ weekend,
+        data = flight,
+        main = "First-Class Prices on Weekends vs Weekdays",
+        xlab = "Weekend",
+        ylab = "First-Class Price",
+        col = "orange")
+
+# Correlation on weekdays
+weekday_data <- subset(flight, weekend == "No")
+
+cor(weekday_data$coach_price,
+    weekday_data$firstclass_price,
+    use = "complete.obs")
+
+# Correlation on weekends
+weekend_data <- subset(flight, weekend == "Yes")
+
+cor(weekend_data$coach_price,
+    weekend_data$firstclass_price,
+    use = "complete.obs")
+
+
+# ==============================
+# Question 09
+# ==============================
+
+# Average coach prices by day and redeye status
+aggregate(coach_price ~ day_of_week + redeye,
+          data = flight,
+          mean)
+
+# Boxplot of coach prices by redeye
+boxplot(coach_price ~ redeye,
+        data = flight,
+        main = "Coach Prices for Redeye vs Non-Redeye Flights",
+        xlab = "Redeye Flight",
+        ylab = "Coach Price",
+        col = c("skyblue", "orange"))
+
+# Interaction plot
+interaction.plot(flight$day_of_week,
+                 flight$redeye,
+                 flight$coach_price,
+                 col = c("blue", "red"),
+                 lwd = 2,
+                 xlab = "Day of Week",
+                 ylab = "Average Coach Price",
+                 trace.label = "Redeye")
+
+
+#10n0
+
+# =========================
+# Summary Statistics
+# =========================
+
+mean(flight$coach_price, na.rm = TRUE)
+median(flight$coach_price, na.rm = TRUE)
+sd(flight$coach_price, na.rm = TRUE)
+
+summary(flight[, c("coach_price",
+                   "firstclass_price",
+                   "miles",
+                   "delay",
+                   "hours")])
+
+
+# =========================
+# Histogram
+# =========================
+
+hist(flight$coach_price,
+     main = "Histogram of Coach Prices",
+     xlab = "Coach Price",
+     col = "skyblue",
+     border = "black")
+
+
+# =========================
+# Boxplot
+# =========================
+
+boxplot(flight$coach_price,
+        main = "Boxplot of Coach Prices",
+        ylab = "Coach Price",
+        col = "orange")
+
+
+# =========================
+# Bar Chart
+# =========================
+
+barplot(table(flight$day_of_week),
+        main = "Flights by Day of Week",
+        col = "lightgreen")
+
+
+# =========================
+# Independent t-test
+# Weekend vs Weekday Prices
+# =========================
+
+t.test(coach_price ~ weekend,
+       data = flight)
+
+
+# =========================
+# Chi-Square Test
+# Redeye vs Weekend
+# =========================
+
+table_test <- table(flight$redeye,
+                    flight$weekend)
+
+chisq.test(table_test)
+
+
+# =========================
+# Correlation Analysis
+# =========================
+
+variables <- flight[, c("coach_price",
+                        "miles",
+                        "passengers",
+                        "delay",
+                        "hours")]
+
+cor(variables,
+    use = "complete.obs")
+
+
+# =========================
+# Linear Regression
+# Predict Coach Price
+# =========================
+
+model_linear <- lm(coach_price ~ miles +
+                     passengers +
+                     delay +
+                     hours,
+                   data = flight)
+
+summary(model_linear)
+
+
+# =========================
+# Logistic Regression
+# Predict Redeye Flights
+# =========================
+
+flight$redeye_binary <- ifelse(flight$redeye == "Yes", 1, 0)
+
+model_logistic <- glm(redeye_binary ~ coach_price +
+                        hours +
+                        delay,
+                      data = flight,
+                      family = binomial)
+
+summary(model_logistic)
+
+
+
+# ==============================
+# Question 10
+# Overall Statistical Analysis
+# ==============================
+
+# =====================================
+# Summary Statistics
+# =====================================
+
+summary(flight[, c(
+  "coach_price",
+  "firstclass_price",
+  "miles",
+  "passengers",
+  "delay",
+  "hours"
+)])
+
+# Mean
+sapply(flight[, c(
+  "coach_price",
+  "firstclass_price",
+  "miles",
+  "passengers",
+  "delay",
+  "hours"
+)], mean)
+
+# Median
+sapply(flight[, c(
+  "coach_price",
+  "firstclass_price",
+  "miles",
+  "passengers",
+  "delay",
+  "hours"
+)], median)
+
+# Standard Deviation
+sapply(flight[, c(
+  "coach_price",
+  "firstclass_price",
+  "miles",
+  "passengers",
+  "delay",
+  "hours"
+)], sd)
+
+# =====================================
+# Histogram of Coach Prices
+# =====================================
+
+hist(
+  flight$coach_price,
+  col = "skyblue",
+  border = "black",
+  main = "Distribution of Coach Ticket Prices",
+  xlab = "Coach Ticket Price"
+)
+
+# =====================================
+# Boxplot of Coach Prices
+# =====================================
+
+boxplot(
+  flight$coach_price,
+  col = "lightgreen",
+  main = "Boxplot of Coach Ticket Prices",
+  ylab = "Coach Ticket Price"
+)
+
+# =====================================
+# Bar Chart of Flights by Day
+# =====================================
+
+barplot(
+  table(flight$day_of_week),
+  col = "lightgreen",
+  main = "Flights by Day of Week",
+  xlab = "Day of Week",
+  ylab = "Frequency"
+)
+
+# =====================================
+# Correlation Matrix
+# =====================================
+
+cor_matrix <- cor(
+  flight[, c(
+    "coach_price",
+    "firstclass_price",
+    "miles",
+    "passengers",
+    "delay",
+    "hours"
+  )],
+  use = "complete.obs"
+)
+
+print(cor_matrix)
+
+# =====================================
+# Correlation Heatmap
+# =====================================
+
+library(corrplot)
+
+corrplot(
+  cor_matrix,
+  method = "color",
+  addCoef.col = "black",
+  tl.col = "black",
+  number.cex = 0.8
+)
+
+# =====================================
+# Independent t-test
+# Weekend vs Weekday Coach Prices
+# =====================================
+
+t_test <- t.test(
+  coach_price ~ weekend,
+  data = flight
+)
+
+print(t_test)
+
+# =====================================
+# Linear Regression
+# Predict First-Class Price
+# =====================================
+
+model_linear <- lm(
+  firstclass_price ~ coach_price,
+  data = flight
+)
+
+summary(model_linear)
+
+# Regression Equation
+coef(model_linear)
+
+# =====================================
+# Logistic Regression
+# Predict Redeye Flights
+# =====================================
+
+flight$redeye_binary <- ifelse(
+  flight$redeye == "Yes",
+  1,
+  0
+)
+
+model_logistic <- glm(
+  redeye_binary ~ coach_price + hours + delay,
+  data = flight,
+  family = binomial
+)
+
+summary(model_logistic)

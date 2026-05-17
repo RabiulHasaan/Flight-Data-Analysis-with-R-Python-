@@ -1,0 +1,1383 @@
+\documentclass[12pt,a4paper]{article}
+
+% Page Layout
+\usepackage[a4paper,margin=1in]{geometry}
+
+% Times New Roman Font
+\usepackage{fontspec}
+\setmainfont{Times New Roman}
+
+% Line Spacing
+\usepackage{setspace}
+\singlespacing
+
+% Color
+\usepackage{xcolor}
+
+% Image Packages
+\usepackage{graphicx}
+\usepackage{float}
+
+% Code Formatting
+\usepackage{listings}
+
+
+
+
+
+
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{fontspec}
+
+
+
+\lstset{
+    language=R,
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{blue},
+    commentstyle=\color{green},
+    stringstyle=\color{red},
+    breaklines=true,
+    showstringspaces=false,
+    frame=single
+}
+
+
+
+
+\begin{document}
+
+
+
+\begin{titlepage}
+\newgeometry{margin=0in}
+% Background
+\begin{tikzpicture}[remember picture,overlay]
+
+% Full Background Color
+\fill[blue!6] (current page.south west)
+rectangle (current page.north east);
+
+% Top Shape
+\fill[blue!20]
+(current page.north west)
+-- ++(8,-3)
+-- ++(4,5)
+-- ++(-12,-2)
+-- cycle;
+
+% Left Shape
+\fill[purple!15]
+(current page.south west)
+-- ++(5,8)
+-- ++(4,-3)
+-- ++(-2,-8)
+-- cycle;
+
+% Bottom Right Shape
+\fill[cyan!20]
+(current page.south east)
+-- ++(-8,4)
+-- ++(3,6)
+-- ++(8,-2)
+-- cycle;
+
+% Main White Card
+\fill[white!55,rounded corners=25pt]
+(3,4) rectangle (18,24);
+
+\end{tikzpicture}
+
+\vspace*{0.8cm}
+
+% Top Row
+\noindent
+\hspace{1.2cm}
+\begin{minipage}{0.12\textwidth}
+\includegraphics[width=\linewidth]{BRUR_Logo.svg.png}
+\end{minipage}
+\hspace{0.7cm}
+\begin{minipage}{0.7\textwidth}
+\vspace{0.5cm}
+{\Huge \textbf{BEGUM ROKEYA UNIVERSITY, RANGPUR}}
+\end{minipage}
+
+\vspace{4.2cm}
+
+\begin{center}
+
+{\Huge \textbf{ASSIGNMENT ON}}
+
+\vspace{0.8cm}
+
+{\LARGE \textbf{Flight Data Analysis with R}}
+
+\vspace{1.3cm}
+
+{\Large \textbf{Course Title:}}\\[0.2cm]
+{\Large Programming with R \& Python}
+
+\vspace{0.7cm}
+
+{\Large \textbf{Course Code:}}\\[0.2cm]
+{\Large STAT-2205}
+
+\vspace{0.7cm}
+
+{\Large \textbf{Submission Date:}}\\[0.2cm]
+{\Large 20 MAY 2026}
+
+\end{center}
+
+\vfill
+
+% Bottom Section
+\noindent
+\hspace{1.2cm}
+\begin{minipage}[t]{0.38\textwidth}
+
+\raggedright
+
+{\Large \textbf{Submitted By}}
+
+\vspace{0.6cm}
+
+{\large \textbf{MOHAMMAD RABIUL HASAN}} \\[0.35cm]
+
+{\large \textbf{ID:} 12210048} \\[0.35cm]
+
+{\large \textbf{Reg:} 000017428} \\[0.35cm]
+
+{\large \textbf{Session:} 2023-2024} \\[0.35cm]
+
+{\large Department of Statistics} \\[0.35cm]
+
+{\large Begum Rokeya University, Rangpur}
+
+\end{minipage}
+\hfill
+\begin{minipage}[t]{0.38\textwidth}
+
+\raggedright
+
+{\Large \textbf{Submitted To}}
+
+\vspace{0.6cm}
+
+{\large \textbf{DR. MD. SIDDIKUR RAHMAN}} \\[0.35cm]
+
+{\large Associate Professor} \\[0.35cm]
+
+{\large Department of Statistics} \\[0.35cm]
+
+{\large Begum Rokeya University, Rangpur}
+
+\end{minipage}
+
+\vspace{1.5cm}
+
+\end{titlepage}
+
+\restoregeometry
+\newpage
+
+\tableofcontents
+
+\newpage
+
+
+
+
+\color{black}
+
+\begin{center}
+    \Large \textbf{\textcolor{blue}{Flight Data Analysis with R}}
+\end{center}
+
+\vspace{0.5cm}
+
+\section*{\textcolor{blue}{Question no 1}}
+
+Analyze the coach ticket prices from the sampled flight dataset using R. Find the maximum, minimum, mean, median, and standard deviation of coach ticket prices. Also create a histogram and boxplot for the coach ticket prices and interpret the results.
+\addcontentsline{toc}{section}{Question no 1}
+\section{\textcolor{blue}{Solution :}}
+\subsection{\textcolor{purple}{R Code}}
+
+\begin{lstlisting}
+# Random sample using ID
+set.seed(12210048)
+flight <- airline[sample(nrow(airline), 200), ]
+
+# Highest coach ticket price
+max(flight$coach_price, na.rm = TRUE)
+
+# Lowest coach ticket price
+min(flight$coach_price, na.rm = TRUE)
+
+# Average coach ticket price
+mean(flight$coach_price, na.rm = TRUE)
+
+# Median coach ticket price
+median(flight$coach_price, na.rm = TRUE)
+
+# Summary statistics
+summary(flight$coach_price)
+
+# Standard deviation
+sd(flight$coach_price, na.rm = TRUE)
+
+# Histogram
+hist(flight$coach_price,
+     main = "Distribution of Coach Ticket Prices",
+     xlab = "Coach Ticket Price",
+     col = "skyblue",
+     border = "black")
+
+# Boxplot
+boxplot(flight$coach_price,
+        main = "Boxplot of Coach Ticket Prices",
+        ylab = "Coach Ticket Price",
+        col = "lightgreen")
+\end{lstlisting}
+\newpage
+\subsection{\textcolor{purple}{Results}}
+
+\begin{itemize}
+    \item Highest coach ticket price = 531.85
+    \item Lowest coach ticket price = 151.07
+    \item Average coach ticket price = 374.7093
+    \item Median coach ticket price = 384.105
+    \item Standard deviation = 69.9448
+\end{itemize}
+
+\subsection{\textcolor{purple}{Histogram}}
+\vspace{-.5cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{his_1.png}
+\caption{Distribution of Coach Ticket Prices}
+\end{figure}
+
+\subsection{\textcolor{purple}{Boxplot}}
+\vspace{-1cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{box_1.png}
+\caption{Boxplot of Coach Ticket Prices}
+\end{figure}
+
+\subsection{\textcolor{purple}{Interpretation}}
+
+The analysis of coach ticket prices was conducted using a random sample of 200 flights selected based on ID 12210048.
+
+The highest coach ticket price was \$531.85, while the lowest price was \$151.07. This indicates that coach ticket prices vary considerably among flights. The average coach ticket price was approximately \$374.71, and the median price was \$384.11. Since the mean and median are relatively close, the distribution of prices appears fairly balanced with only slight skewness.
+
+The histogram shows that most coach ticket prices are concentrated between approximately \$300 and \$450. Very few tickets fall below \$200 or above \$500, indicating that extreme prices are uncommon. The distribution appears close to a normal distribution with a moderate spread.
+
+The boxplot also supports this observation. Most ticket prices are distributed within a reasonable range, although there is one lower outlier around \$150, suggesting that a few unusually cheap tickets exist. The interquartile range indicates that 50\% of the ticket prices lie roughly between \$328 and \$426.
+
+The standard deviation of approximately 69.94 suggests a moderate level of variability in coach ticket prices.
+
+Based on the analysis, a \$500 coach ticket appears relatively expensive because it is significantly higher than the average ticket price of \$374.71. Although such prices do occur, they are not typical for most flights in the sample.
+
+\section*{\textcolor{blue}{Question no 2}}
+
+What are the high, low, and average prices for 8-hour-long flights? Does a \$500 ticket seem more reasonable than before?
+\addcontentsline{toc}{section}{Question no 2}
+\section{\textcolor{blue}{Solution:}}
+\subsection{\textcolor{purple}{R Code}}
+
+\begin{lstlisting}
+# Flights with approximately 8-hour duration
+flight_8hr <- subset(flight, hours == 8)
+
+# Highest price for 8-hour flights
+max(flight_8hr$coach_price, na.rm = TRUE)
+
+# Lowest price for 8-hour flights
+min(flight_8hr$coach_price, na.rm = TRUE)
+
+# Average price for 8-hour flights
+mean(flight_8hr$coach_price, na.rm = TRUE)
+
+# Median price
+median(flight_8hr$coach_price, na.rm = TRUE)
+
+# Summary statistics
+summary(flight_8hr$coach_price)
+\end{lstlisting}
+
+
+
+\begin{lstlisting}
+# Standard deviation
+sd(flight_8hr$coach_price, na.rm = TRUE)
+
+# Histogram
+hist(flight_8hr$coach_price,
+     main = "Distribution of 8-Hour Flight Prices",
+     xlab = "Coach Ticket Price",
+     col = "skyblue",
+     border = "black")
+
+# Boxplot
+boxplot(flight_8hr$coach_price,
+        main = "Boxplot of 8-Hour Flight Prices",
+        ylab = "Coach Ticket Price",
+        col = "orange")
+\end{lstlisting}
+
+\subsection{\textcolor{purple}{Results}}
+
+\begin{itemize}
+    \item Highest 8-hour flight price = 446.595
+    \item Lowest 8-hour flight price = 315.59
+    \item Average 8-hour flight price = 390.4417
+    \item Median 8-hour flight price = 409.14
+    \item Standard deviation = 67.47443
+\end{itemize}
+
+\subsection{\textcolor{purple}{Histogram}}
+\vspace{-.5cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{his_2.png}
+\caption{Distribution of 8-Hour Flight Prices}
+\end{figure}
+
+\subsection{\textcolor{purple}{Boxplot}}
+\vspace{-1cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{box_2.png}
+\caption{Boxplot of 8-Hour Flight Prices}
+\end{figure}
+
+\subsection{\textcolor{purple}{Interpretation}}
+
+The analysis focuses on flights with a duration of 8 hours. The highest coach ticket price for these flights was approximately \$446.60, while the lowest price was about \$315.59. This shows that ticket prices for 8-hour flights vary within a moderate range.
+
+The average coach ticket price was approximately \$390.44, and the median price was \$409.14. Since the median is slightly higher than the mean, the distribution may be slightly left-skewed due to a few lower-priced tickets.
+
+The histogram indicates that most 8-hour flight ticket prices are concentrated between approximately \$350 and \$450. There are no extreme price values, suggesting that long-duration flight prices remain relatively consistent.
+
+The boxplot also shows a moderate spread in prices without any significant outliers. Most ticket prices fall within a reasonable range around the median value.
+
+The standard deviation of approximately \$67.47 suggests moderate variability among 8-hour flight prices.
+
+Compared to Question 1, a \$500 coach ticket now appears slightly more reasonable because long-duration flights generally have higher ticket prices. However, since the average price is still below \$500, such a ticket would still be considered relatively expensive compared to most 8-hour flights in the sample.
+\newpage
+\section*{\textcolor{blue}{Question no 3}}
+
+How are flight delay times distributed? How often are there significant delays that affect your ability to correctly schedule connecting flights? What kinds of delays are typical?
+\addcontentsline{toc}{section}{Question no 3}
+\section{\textcolor{blue}{Solution:}}
+\subsection{\textcolor{purple}{R Code}}
+
+\begin{lstlisting}
+# Summary statistics for delays
+summary(flight$delay)
+
+# Mean delay
+mean(flight$delay, na.rm = TRUE)
+
+# Median delay
+median(flight$delay, na.rm = TRUE)
+
+# Standard deviation
+sd(flight$delay, na.rm = TRUE)
+
+# Maximum delay
+max(flight$delay, na.rm = TRUE)
+
+# Minimum delay
+min(flight$delay, na.rm = TRUE)
+
+# Histogram of delays
+hist(flight$delay,
+     main = "Distribution of Flight Delays",
+     xlab = "Delay Time (Minutes)",
+     col = "skyblue",
+     border = "black")
+
+# Boxplot of delays
+boxplot(flight$delay,
+        main = "Boxplot of Flight Delays",
+        ylab = "Delay Time (Minutes)",
+        col = "orange")
+
+# Number of significant delays (more than 60 minutes)
+sum(flight$delay > 60, na.rm = TRUE)
+
+# Percentage of significant delays
+mean(flight$delay > 60, na.rm = TRUE) * 100
+\end{lstlisting}
+\newpage
+\subsection{\textcolor{purple}{Results}}
+
+\begin{itemize}
+    \item Maximum delay = 43 minutes
+    \item Minimum delay = 0 minutes
+    \item Mean delay = 12.255 minutes
+    \item Median delay = 10 minutes
+    \item Standard deviation = 7.991828
+    \item Number of delays greater than 60 minutes = 0
+    \item Percentage of significant delays = 0\%
+\end{itemize}
+
+\subsection{\textcolor{purple}{Histogram}}
+
+\vspace{-.8cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{his_3.png}
+\caption{Distribution of Flight Delays}
+\end{figure}
+
+\subsection{\textcolor{purple}{Boxplot}}
+
+\vspace{-1.5cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{box_3.png}
+\caption{Boxplot of Flight Delays}
+\end{figure}
+
+\subsection{\textcolor{purple}{Interpretation}}
+
+The analysis shows that flight delays are generally low to moderate in duration. The maximum delay observed in the sample was 43 minutes, while the minimum delay was 0 minutes, indicating that some flights departed on time.
+
+The average delay time was approximately 12.26 minutes, and the median delay was 10 minutes. Since the mean is slightly higher than the median, the distribution of delays appears to be positively skewed due to a few longer delays.
+
+The histogram indicates that most flights experienced delays between 5 and 15 minutes. Delays greater than 20 minutes were less common, and very long delays were rare.
+
+The boxplot also confirms this pattern by showing several higher delay outliers above 20 minutes. However, there were no delays greater than 60 minutes in the sample.
+
+The standard deviation of approximately 7.99 minutes suggests moderate variability in delay times.
+
+Overall, the results indicate that most delays are relatively short and are unlikely to seriously affect connecting flights. Significant delays were not common in this sample, since no flights experienced delays longer than 60 minutes.
+
+
+\section*{\textcolor{blue}{Question no 4}}
+
+How does the coach price correlate with flight distance, number of passengers, delay, and flight duration?
+\addcontentsline{toc}{section}{Question no 4}
+\section{\textcolor{blue}{Solution:}}
+\subsection{\textcolor{purple}{R Code}}
+
+\begin{lstlisting}
+# Select numeric variables
+variables <- flight[, c("coach_price",
+                        "miles",
+                        "passengers",
+                        "delay",
+                        "hours")]
+
+# Correlation matrix
+cor(variables, use = "complete.obs")
+
+# Coach price vs miles
+plot(flight$miles,
+     flight$coach_price,
+     main = "Coach Price vs Flight Distance",
+     xlab = "Miles",
+     ylab = "Coach Price",
+     col = "blue",
+     pch = 19)
+\end{lstlisting}
+
+
+\newpage
+
+
+\begin{lstlisting}
+# Coach price vs passengers
+plot(flight$passengers,
+     flight$coach_price,
+     main = "Coach Price vs Number of Passengers",
+     xlab = "Passengers",
+     ylab = "Coach Price",
+     col = "green",
+     pch = 19)
+
+# Coach price vs delay
+plot(flight$delay,
+     flight$coach_price,
+     main = "Coach Price vs Delay",
+     xlab = "Delay (Minutes)",
+     ylab = "Coach Price",
+     col = "red",
+     pch = 19)
+
+# Coach price vs hours
+plot(flight$hours,
+     flight$coach_price,
+     main = "Coach Price vs Flight Duration",
+     xlab = "Hours",
+     ylab = "Coach Price",
+     col = "purple",
+     pch = 19)
+\end{lstlisting}
+
+\subsection{\textcolor{purple}{Correlation Matrix}}
+
+
+
+\begin{verbatim}
+            coach_price       miles  passengers       delay       hours
+coach_price   1.0000000  0.32521552  0.14024060 -0.16193976  0.30537649
+miles         0.3252155  1.00000000 -0.05297476  0.03273516  0.98462433
+passengers    0.1402406 -0.05297476  1.00000000 -0.03831730 -0.06085950
+delay        -0.1619398  0.03273516 -0.03831730  1.00000000  0.03952751
+hours         0.3053765  0.98462433 -0.06085950  0.03952751  1.00000000
+\end{verbatim}
+
+\subsection{\textcolor{purple}{Scatter Plot: Coach Price vs Flight Distance}}
+
+\vspace{-.5cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{scat_4.1.png}
+\caption{Coach Price vs Flight Distance}
+\end{figure}
+
+\subsection{\textcolor{purple}{Scatter Plot: Coach Price vs Number of Passengers}}
+
+\vspace{-.5cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{scat_4.2.png}
+\caption{Coach Price vs Number of Passengers}
+\end{figure}
+
+\subsection{\textcolor{purple}{Scatter Plot: Coach Price vs Delay}}
+
+\vspace{-.5cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{scat_4.3.png}
+\caption{Coach Price vs Delay}
+\end{figure}
+
+\subsection{\textcolor{purple}{Interpretation}}
+
+The correlation analysis was conducted to examine the relationship between coach ticket prices and several flight-related variables including distance, number of passengers, delay, and flight duration.
+
+The correlation between coach price and flight distance was approximately 0.325, indicating a moderate positive relationship. This suggests that longer flights generally tend to have higher ticket prices.
+
+The relationship between coach price and flight duration was also moderately positive with a correlation value of approximately 0.305. Flights with longer travel times usually have higher prices.
+
+The correlation between coach price and number of passengers was relatively weak at approximately 0.140. This indicates that the number of passengers has little influence on coach ticket prices.
+
+The relationship between coach price and delay was weakly negative with a correlation value of approximately -0.162. This suggests that delays do not strongly affect ticket prices, although flights with larger delays may sometimes have slightly lower prices.
+
+The scatter plots support these findings. The plots for miles and hours show a slight upward trend, while the passenger and delay plots appear more scattered with no strong linear relationship.
+
+Overall, flight distance and flight duration appear to have the strongest positive relationships with coach ticket prices among the variables analyzed.
+
+\newpage
+
+\section*{\textcolor{blue}{Question no 5}}
+
+What is the relationship between coach and first-class prices? Do flights with higher coach prices always have higher first-class prices as well?
+\addcontentsline{toc}{section}{Question no 5}
+\section{\textcolor{blue}{Solution:}}
+\subsection{\textcolor{purple}{R Code}}
+
+\begin{lstlisting}
+# Correlation between coach and first-class prices
+cor(flight$coach_price,
+    flight$firstclass_price,
+    use = "complete.obs")
+
+# Scatter plot
+plot(flight$coach_price,
+     flight$firstclass_price,
+     main = "Coach Price vs First-Class Price",
+     xlab = "Coach Ticket Price",
+     ylab = "First-Class Ticket Price",
+     col = "blue",
+     pch = 19)
+
+# Linear regression model
+model_fc <- lm(firstclass_price ~ coach_price, data = flight)
+
+# Regression summary
+summary(model_fc)
+
+# Add regression line
+abline(model_fc, col = "red", lwd = 2)
+\end{lstlisting}
+
+\subsection{\textcolor{purple}{Results}}
+
+\begin{itemize}
+    \item Correlation between coach and first-class prices = 0.7993169
+    \item Intercept of regression model = 783.40780
+    \item Slope coefficient for coach price = 1.82179
+    \item Multiple R-squared = 0.6389
+    \item p-value $<$ 0.001
+\end{itemize}
+
+\newpage
+\subsection{\textcolor{purple}{Regression Summary}}
+
+\begin{verbatim}
+Call:
+lm(formula = firstclass_price ~ coach_price, data = flight)
+
+Coefficients:
+             Estimate Std. Error t value Pr(>|t|)
+(Intercept) 783.40780   37.09801   21.12   <2e-16 ***
+coach_price   1.82179    0.09733   18.72   <2e-16 ***
+
+Multiple R-squared: 0.6389
+Adjusted R-squared: 0.6371
+\end{verbatim}
+
+\subsection{\textcolor{purple}{Scatter Plot}}
+
+\vspace{-.5cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{scat_5.png}
+\caption{Relationship Between Coach and First-Class Prices}
+\end{figure}
+
+\subsection{\textcolor{purple}{Regression Line Plot}}
+\vspace{-.5cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{rline_5.png}
+\caption{Regression Line Showing the Relationship Between Coach and First-Class Prices}
+\end{figure}
+
+\subsection{\textcolor{purple}{Interpretation}}
+
+The analysis shows a strong positive relationship between coach ticket prices and first-class ticket prices. The correlation coefficient between the two variables is approximately 0.799, indicating a strong positive correlation.
+
+The scatter plot demonstrates that flights with higher coach ticket prices generally also have higher first-class ticket prices. The points follow a clear upward trend, and the regression line further confirms this positive relationship.
+
+The linear regression model indicates that for every one-dollar increase in coach ticket price, the first-class ticket price increases by approximately \$1.82 on average.
+
+The R-squared value of approximately 0.639 suggests that about 63.9\% of the variation in first-class ticket prices can be explained by coach ticket prices. The very small p-value indicates that the relationship is statistically significant.
+
+Overall, flights with higher coach prices usually tend to have higher first-class prices as well, although the relationship is not perfectly exact because some variability still exists among flights.
+
+\newpage
+\section*{\textcolor{blue}{Question no 6}}
+
+What is the relationship between coach prices and in-flight features: in-flight meal, in-flight entertainment, and in-flight WiFi? Which features are associated with the highest increase in price?
+
+\addcontentsline{toc}{section}{Question no 6}
+\section{\textcolor{blue}{Solution:}}
+\subsection{\textcolor{purple}{R Code}}
+
+\begin{lstlisting}
+# Average coach price by meal availability
+aggregate(coach_price ~ inflight_meal,
+          data = flight,
+          mean)
+
+# Average coach price by entertainment availability
+aggregate(coach_price ~ inflight_entertainment,
+          data = flight,
+          mean)
+
+# Average coach price by WiFi availability
+aggregate(coach_price ~ inflight_wifi,
+          data = flight,
+          mean)
+
+# Boxplot for meal
+boxplot(coach_price ~ inflight_meal,
+        data = flight,
+        main = "Coach Price by In-Flight Meal",
+        xlab = "Meal Available",
+        ylab = "Coach Price",
+        col = "skyblue")
+
+# Boxplot for entertainment
+boxplot(coach_price ~ inflight_entertainment,
+        data = flight,
+        main = "Coach Price by In-Flight Entertainment",
+        xlab = "Entertainment Available",
+        ylab = "Coach Price",
+        col = "lightgreen")
+
+# Boxplot for WiFi
+boxplot(coach_price ~ inflight_wifi,
+        data = flight,
+        main = "Coach Price by In-Flight WiFi",
+        xlab = "WiFi Available",
+        ylab = "Coach Price",
+        col = "orange")
+\end{lstlisting}
+
+\newpage
+\subsection{\textcolor{purple}{Results}}
+
+\begin{verbatim}
+Average coach price by meal availability
+
+Meal = No   : 371.9583
+Meal = Yes  : 380.6916
+
+Average coach price by entertainment availability
+
+Entertainment = No  : 322.3349
+Entertainment = Yes : 386.9946
+
+Average coach price by WiFi availability
+
+WiFi = No  : 295.550
+WiFi = Yes : 384.493
+\end{verbatim}
+
+\subsection{\textcolor{purple}{Boxplot: In-Flight Meal}}
+\vspace{-.5cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{box_6.1.png}
+\caption{Coach Price by In-Flight Meal}
+\end{figure}
+
+\subsection{\textcolor{purple}{Boxplot: In-Flight Entertainment}}
+\vspace{-.5cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{box_6.2.png}
+\caption{Coach Price by In-Flight Entertainment}
+\end{figure}
+
+\subsection{\textcolor{purple}{Boxplot: In-Flight WiFi}}
+\vspace{-.5cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{box_6.3.png}
+\caption{Coach Price by In-Flight WiFi}
+\end{figure}
+
+\subsection{\textcolor{purple}{Interpretation}}
+
+The analysis examined the relationship between coach ticket prices and in-flight services such as meals, entertainment, and WiFi.
+
+Flights that provided in-flight meals had a slightly higher average coach ticket price (\$380.69) compared to flights without meals (\$371.96). This suggests that meal services have only a small effect on ticket prices.
+
+Flights with in-flight entertainment showed a much larger increase in average coach prices. Flights without entertainment had an average price of approximately \$322.33, while flights with entertainment had an average price of approximately \$386.99.
+
+The largest price difference was associated with in-flight WiFi. Flights without WiFi had an average coach price of approximately \$295.55, whereas flights with WiFi had an average price of approximately \$384.49.
+
+The boxplots support these findings by showing higher median prices and overall distributions for flights that include entertainment and WiFi services.
+
+Overall, in-flight WiFi appears to be the feature associated with the highest increase in coach ticket prices, followed by in-flight entertainment. Meal availability has the smallest impact on ticket prices.
+
+
+
+\section*{\textcolor{blue}{Question no 7}}
+
+How does the number of passengers change in relation to the length of flights?
+
+\addcontentsline{toc}{section}{Question no 7}
+\section{\textcolor{blue}{Solution:}}
+\subsection{\textcolor{purple}{R Code}}
+
+\begin{lstlisting}
+# Correlation between passengers and flight duration
+cor(flight$passengers,
+    flight$hours,
+    use = "complete.obs")
+
+# Scatter plot
+plot(flight$hours,
+     flight$passengers,
+     main = "Passengers vs Flight Duration",
+     xlab = "Flight Duration (Hours)",
+     ylab = "Number of Passengers",
+     col = "blue",
+     pch = 19)
+
+# Linear regression model
+model_pass <- lm(passengers ~ hours, data = flight)
+
+# Regression summary
+summary(model_pass)
+
+# Add regression line
+abline(model_pass, col = "red", lwd = 2)
+
+# Average passengers by flight duration
+aggregate(passengers ~ hours,
+          data = flight,
+          mean)
+\end{lstlisting}
+\newpage
+\subsection{\textcolor{purple}{Results}}
+
+\begin{itemize}
+    \item Correlation between passengers and flight duration = -0.0608595
+    \item Intercept of regression model = 209.3875
+    \item Slope coefficient for flight duration = -0.4631
+    \item Multiple R-squared = 0.003704
+    \item p-value = 0.392
+\end{itemize}
+
+\subsection{\textcolor{purple}{Regression Equation}}
+
+\[
+y = 209.3875 - 0.4631x
+\]
+
+\subsection{\textcolor{purple}{Average Passengers by Flight Duration}}
+
+\begin{verbatim}
+Hours = 1 : 205.2000
+Hours = 2 : 210.2188
+Hours = 3 : 208.9143
+Hours = 4 : 207.3500
+Hours = 5 : 210.1111
+Hours = 6 : 191.0000
+Hours = 7 : 205.1765
+Hours = 8 : 194.3333
+\end{verbatim}
+
+\subsection{\textcolor{purple}{Scatter Plot with Regression Line}}
+\vspace{-.5cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{scat_7.png}
+\caption{Passengers vs Flight Duration with Regression Line}
+\end{figure}
+\newpage
+\subsection{\textcolor{purple}{Interpretation}}
+
+The analysis examined the relationship between the number of passengers and flight duration.
+
+The correlation coefficient between passengers and flight duration was approximately -0.061, indicating a very weak negative relationship. This suggests that flight duration has little effect on the number of passengers.
+
+The regression equation \( y = 209.3875 - 0.4631x \) indicates that the number of passengers decreases slightly as flight duration increases, although the relationship is extremely weak.
+
+The scatter plot shows that passenger counts remain relatively similar across different flight durations. Most flights carried around 200 to 220 passengers regardless of whether the flight was short or long.
+
+The regression model also supports this observation. The slope coefficient for flight duration was approximately -0.463, indicating only a very small decrease in passenger numbers as flight duration increases.
+
+The R-squared value was extremely low (0.0037), meaning that flight duration explains less than 1\% of the variation in passenger counts. Additionally, the p-value of 0.392 indicates that the relationship is not statistically significant.
+
+The average passenger counts by flight duration were also fairly consistent across most flight lengths, although flights lasting 6 and 8 hours showed slightly lower average passenger numbers.
+
+Overall, the analysis suggests that there is no strong relationship between flight duration and the number of passengers.
+
+
+
+\section*{\textcolor{blue}{Question no 8}}
+
+What is the relationship between coach and first-class prices on weekends compared to weekdays?
+\addcontentsline{toc}{section}{Question no 8}
+\section{\textcolor{blue}{Solution:}}
+\subsection{\textcolor{purple}{R Code}}
+
+\begin{lstlisting}
+# Average prices by weekend
+aggregate(cbind(coach_price, firstclass_price) ~ weekend,
+          data = flight,
+          mean)
+
+# Boxplot for coach prices
+boxplot(coach_price ~ weekend,
+        data = flight,
+        main = "Coach Prices on Weekends vs Weekdays",
+        xlab = "Weekend",
+        ylab = "Coach Price",
+        col = "skyblue")
+    \end{lstlisting}
+
+\newpage
+
+\begin{lstlisting}
+# Boxplot for first-class prices
+boxplot(firstclass_price ~ weekend,
+        data = flight,
+        main = "First-Class Prices on Weekends vs Weekdays",
+        xlab = "Weekend",
+        ylab = "First-Class Price",
+        col = "orange")
+
+# Correlation on weekdays
+weekday_data <- subset(flight, weekend == "No")
+
+cor(weekday_data$coach_price,
+    weekday_data$firstclass_price,
+    use = "complete.obs")
+
+# Correlation on weekends
+weekend_data <- subset(flight, weekend == "Yes")
+
+cor(weekend_data$coach_price,
+    weekend_data$firstclass_price,
+    use = "complete.obs")
+\end{lstlisting}
+
+\subsection{\textcolor{purple}{Results}}
+
+\begin{verbatim}
+Average Prices
+
+Weekdays (No Weekend):
+Coach Price       = 307.210
+First-Class Price = 1254.816
+
+Weekends:
+Coach Price       = 405.035
+First-Class Price = 1560.950
+
+Correlation on Weekdays = 0.7619815
+Correlation on Weekends = 0.5771452
+\end{verbatim}
+
+\subsection{\textcolor{purple}{Coach Price Boxplot}}
+\vspace{-.5cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{box_8.1.png}
+\caption{Coach Prices on Weekends vs Weekdays}
+\end{figure}
+
+\subsection{\textcolor{purple}{First-Class Price Boxplot}}
+\vspace{-.5cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{box_8.2.png}
+\caption{First-Class Prices on Weekends vs Weekdays}
+\end{figure}
+
+\newpage
+\subsection{\textcolor{purple}{Interpretation}}
+
+The analysis compared coach and first-class ticket prices between weekends and weekdays.
+
+The average coach ticket price on weekdays was approximately \$307.21, while the average weekend coach ticket price increased to approximately \$405.04. Similarly, the average first-class ticket price increased from approximately \$1254.82 on weekdays to approximately \$1560.95 on weekends.
+
+The boxplots clearly show that both coach and first-class ticket prices are generally higher on weekends compared to weekdays. The median prices and overall price distributions are shifted upward for weekend flights.
+
+The correlation between coach and first-class prices on weekdays was approximately 0.762, indicating a strong positive relationship. On weekends, the correlation was approximately 0.577, which still indicates a positive relationship but is somewhat weaker.
+
+These results suggest that flights on weekends are generally more expensive for both coach and first-class passengers. Although higher coach prices are still associated with higher first-class prices on weekends, the relationship is slightly less consistent compared to weekdays.
+
+Overall, weekend flights tend to have significantly higher ticket prices than weekday flights for both seating classes.
+
+
+\section*{\textcolor{blue}{Question no 9}}
+
+How do coach prices differ for redeyes and non-redeyes on each day of the week?
+\addcontentsline{toc}{section}{Question no 9}
+\section{\textcolor{blue}{Solution:}}
+\subsection{\textcolor{purple}{R Code}}
+
+\begin{lstlisting}
+# Average coach prices by day and redeye status
+aggregate(coach_price ~ day_of_week + redeye,
+          data = flight,
+          mean)
+
+# Boxplot of coach prices by redeye
+boxplot(coach_price ~ redeye,
+        data = flight,
+        main = "Coach Prices for Redeye vs Non-Redeye Flights",
+        xlab = "Redeye Flight",
+        ylab = "Coach Price",
+        col = c("skyblue", "orange"))
+# Interaction plot
+interaction.plot(flight$day_of_week,
+                 flight$redeye,
+                 flight$coach_price,
+                 col = c("blue", "red"),
+                 lwd = 2,
+                 xlab = "Day of Week",
+                 ylab = "Average Coach Price",
+                 trace.label = "Redeye")
+\end{lstlisting}
+
+\subsection{\textcolor{purple}{Results}}
+
+\begin{verbatim}
+Average Coach Prices by Day and Redeye Status
+
+Friday     No  = 389.8438
+Monday     No  = 291.0982
+Saturday   No  = 418.5082
+Sunday     No  = 405.5573
+Thursday   No  = 291.8253
+Tuesday    No  = 339.9187
+Wednesday  No  = 315.9903
+
+Monday     Yes = 274.1200
+Saturday   Yes = 255.8500
+Sunday     Yes = 374.9430
+Thursday   Yes = 154.4900
+Tuesday    Yes = 273.5350
+Wednesday  Yes = 293.4300
+\end{verbatim}
+
+\subsection{\textcolor{purple}{Boxplot}}
+\vspace{-1cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{box_9.png}
+\caption{Coach Prices for Redeye vs Non-Redeye Flights}
+\end{figure}
+
+\subsection{\textcolor{purple}{Interaction Plot}}
+\vspace{-.5cm}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\linewidth]{plot_9.png}
+\caption{Average Coach Prices by Day of Week and Redeye Status}
+\end{figure}
+
+\subsection{\textcolor{purple}{Interpretation}}
+
+The analysis compared coach ticket prices for redeye and non-redeye flights across different days of the week.
+
+The results show that non-redeye flights generally have higher coach ticket prices than redeye flights. For example, non-redeye flights on Saturday had the highest average coach price of approximately \$418.51, while redeye flights on Thursday had the lowest average price of approximately \$154.49.
+
+The boxplot indicates that non-redeye flights tend to have higher median ticket prices and a wider range of prices compared to redeye flights. Redeye flights are generally cheaper and show lower overall price distributions.
+
+The interaction plot also demonstrates that ticket prices vary depending on both the day of the week and redeye status. Weekend flights, especially Saturday and Sunday, tend to have higher prices for both redeye and non-redeye flights.
+
+The largest difference between redeye and non-redeye prices appears on Thursday, where redeye flights are considerably cheaper.
+
+Overall, redeye flights are usually less expensive than non-redeye flights, and ticket prices tend to increase during weekends regardless of redeye status.
+
+
+\newpage
+\section*{\textcolor{blue}{Question no 10}}
+
+Perform the analysis for appropriate variables:
+Summary statistics, visualization, hypothesis testing, correlation analysis, regression analysis, linear regression, and logistic regression.
+
+\addcontentsline{toc}{section}{Question no 10}
+\section{\textcolor{blue}{Solution:}}
+
+% R Code
+
+
+\subsection{\textcolor{blue}{R Code}}
+
+\begin{lstlisting}[language=R]
+
+
+
+# Overall Statistical Analysis
+
+
+# Summary Statistics
+summary(flight[, c(
+  "coach_price",
+  "firstclass_price",
+  "miles",
+  "passengers",
+  "delay",
+  "hours"
+)])
+
+# Mean
+sapply(flight[, c(
+  "coach_price",
+  "firstclass_price",
+  "miles",
+  "passengers",
+  "delay",
+  "hours"
+)], mean)
+
+# Median
+sapply(flight[, c(
+  "coach_price",
+  "firstclass_price",
+  "miles",
+  "passengers",
+  "delay",
+  "hours"
+)], median)
+\end{lstlisting}
+\newpage
+
+\begin{lstlisting}
+# Standard Deviation
+sapply(flight[, c(
+  "coach_price",
+  "firstclass_price",
+  "miles",
+  "passengers",
+  "delay",
+  "hours"
+)], sd)
+
+# Histogram
+hist(
+  flight$coach_price,
+  col = "skyblue",
+  border = "black",
+  main = "Distribution of Coach Ticket Prices",
+  xlab = "Coach Ticket Price"
+)
+
+# Boxplot
+boxplot(
+  flight$coach_price,
+  col = "lightgreen",
+  main = "Boxplot of Coach Ticket Prices",
+  ylab = "Coach Ticket Price"
+)
+
+# Bar Chart
+barplot(
+  table(flight$day_of_week),
+  col = "lightgreen",
+  main = "Flights by Day of Week",
+  xlab = "Day of Week",
+  ylab = "Frequency"
+)
+
+# Correlation Matrix
+cor_matrix <- cor(
+  flight[, c(
+    "coach_price",
+    "firstclass_price",
+    "miles",
+    "passengers",
+    "delay",
+    "hours"
+  )],
+  use = "complete.obs"
+)
+print(cor_matrix)
+
+\end{lstlisting}
+\newpage
+\begin{lstlisting}
+# Correlation Heatmap
+library(corrplot)
+
+corrplot(
+  cor_matrix,
+  method = "color",
+  addCoef.col = "black",
+  tl.col = "black",
+  number.cex = 0.8
+)
+
+# Independent t-test
+t_test <- t.test(
+  coach_price ~ weekend,
+  data = flight
+)
+
+print(t_test)
+
+# Linear Regression
+model_linear <- lm(
+  firstclass_price ~ coach_price,
+  data = flight
+)
+
+summary(model_linear)
+
+coef(model_linear)
+
+# Logistic Regression
+flight$redeye_binary <- ifelse(
+  flight$redeye == "Yes",
+  1,
+  0
+)
+
+model_logistic <- glm(
+  redeye_binary ~ coach_price + hours + delay,
+  data = flight,
+  family = binomial
+)
+
+summary(model_logistic)
+
+\end{lstlisting}
+
+
+% Histogram
+
+
+\subsection{\textcolor{red}{Distribution of Coach Ticket Prices}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{his_10.png}
+\caption{Distribution of Coach Ticket Prices}
+\end{figure}
+
+
+% Boxplot
+
+
+\subsection{\textcolor{red}{Boxplot of Coach Ticket Prices}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{box_10.png}
+\caption{Boxplot of Coach Ticket Prices}
+\end{figure}
+
+
+% Bar Chart
+
+
+\subsection{\textcolor{red}{Flights by Day of Week}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{bar_10.png}
+\caption{Flights by Day of Week}
+\end{figure}
+
+% Heatmap
+
+\subsection{\textcolor{red}{Correlation Heatmap}}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{heat_10.png}
+\caption{Correlation Heatmap}
+\end{figure}
+
+
+% Results
+
+\newpage
+\subsection*{\textcolor{purple}{Summary Statistics}}
+
+\begin{verbatim}
+
+Mean Values
+
+coach_price        = 374.7093
+firstclass_price   = 1466.0484
+miles              = 1991.0750
+passengers         = 207.7250
+delay              = 12.2550
+hours              = 3.5900
+
+
+Median Values
+
+coach_price        = 384.105
+firstclass_price   = 1519.100
+miles              = 1978.500
+passengers         = 210.000
+delay              = 10.000
+hours              = 4.000
+
+
+Standard Deviation
+
+coach_price        = 69.944805
+firstclass_price   = 159.416813
+miles              = 942.395184
+passengers         = 13.061870
+delay              = 7.991828
+hours              = 1.716576
+
+\end{verbatim}
+
+% Correlation Matrix
+
+
+\subsection{\textcolor{purple}{Correlation Matrix}}
+
+\begin{verbatim}
+
+                 coach_price firstclass_price miles passengers delay hours
+
+coach_price          1.0000          0.7993   0.3252   0.1402  -0.1619 0.3054
+
+firstclass_price     0.7993          1.0000   0.3269   0.0249  -0.1272 0.3019
+
+miles                0.3252          0.3269   1.0000  -0.0530   0.0327 0.9846
+
+passengers           0.1402          0.0249  -0.0530   1.0000  -0.0383 -0.0609
+
+delay               -0.1619         -0.1272   0.0327  -0.0383   1.0000 0.0395
+
+hours                0.3054          0.3019   0.9846  -0.0609   0.0395 1.0000
+
+\end{verbatim}
+
+
+% Hypothesis Testing
+
+
+\subsection{\textcolor{purple}{Independent t-test}}
+
+\begin{verbatim}
+
+t = -11.403
+
+p-value < 2.2e-16
+
+Mean Weekend Price  = 405.035
+
+Mean Weekday Price  = 307.210
+
+\end{verbatim}
+
+
+% Regression Equation
+
+
+\subsection{\textcolor{purple}{Linear Regression Equation}}
+
+\[
+y = 783.41 + 1.82x
+\]
+
+
+% Logistic Regression
+
+
+\subsection{\textcolor{purple}{Logistic Regression}}
+
+\begin{verbatim}
+
+Logistic regression was performed successfully
+to predict redeye flights using:
+
+1. Coach Price
+2. Flight Hours
+3. Delay
+
+\end{verbatim}
+
+
+% Interpretation
+
+
+\subsection{\textcolor{teal}{Interpretation}}
+
+The histogram indicates that most coach ticket prices are distributed between \$300 and \$450. The boxplot shows moderate variation in coach prices with a few lower-priced outliers.
+
+The bar chart reveals that Saturday and Sunday have the highest number of flights, while Wednesday and Thursday have the lowest frequencies.
+
+The correlation heatmap shows a strong positive relationship between miles and hours (0.98), indicating that longer distances require longer flight durations. Coach ticket prices also have a strong positive correlation with first-class prices (0.80).
+
+The independent t-test shows a statistically significant difference between weekend and weekday coach ticket prices because the p-value is less than 0.05. Weekend flights are generally more expensive than weekday flights.
+
+The linear regression equation:
+
+\[
+y = 783.41 + 1.82x
+\]
+
+suggests that first-class ticket prices increase as coach ticket prices increase.
+
+Finally, logistic regression was successfully used to predict redeye flights using coach price, flight duration, and delay variables.
+\end{document}
+
